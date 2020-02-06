@@ -1,0 +1,71 @@
+/*
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+ * general tool specific CSS rules
+ *
+ * @package     block_coupon
+ *
+ * @copyright   Sebsoft.nl
+ * @author      R.J. van Dongen <rogier@sebsoft.nl>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+.block-coupon-container {
+    display: block;
+}
+
+#block-coupon-modal {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    z-index: 99999;
+    margin: auto;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.block-coupon-modal-content {
+    height: 100%;
+}
+.block-coupon-modal-header {
+    width: 90%;
+    margin: auto;
+    padding: 2px 16px;
+    height: 3.5em;
+    vertical-align: middle;
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+}
+.block-coupon-modal-header .close {
+    color: #000;
+    float: right;
+    font-size: 3em;
+    font-weight: bold;
+}
+.block-coupon-modal-header h2 {
+    display: inline;
+}
+.block-coupon-modal-body {
+    width: 90%;
+    height: 100%;
+    margin: auto;
+}
+.block-coupon-modal-body iframe {
+    width: 100%;
+    height: 100%;
+}
+.btn-coupon {}
