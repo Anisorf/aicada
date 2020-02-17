@@ -56,7 +56,7 @@ class helper {
     /**
      * Collect all courses connected to the provided cohort ID
      *
-     * @param int $cohortid cohortid
+     * @param int $cohortid cohortidapplicable_formats
      * @return bool false if no courses are connected or an array of course records
      */
     final static public function get_courses_by_cohort($cohortid) {

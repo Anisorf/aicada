@@ -67,14 +67,17 @@ try {
     if ($mform->is_cancelled()) {
         redirect(new moodle_url($CFG->wwwroot . '/course/view.php', array('id' => $course->id)));
     } else if ($data = $mform->get_data()) {
+
         // Get type processor.
-        $typeproc = block_coupon\coupon\typebase::get_type_instance($data->coupon_code);
+        // F: its passing also the course id, make it posible to distinguish for different type of coupons (e.g. the course type does not need courseid like the coursespecific type)
+        $typeproc = block_coupon\coupon\typebase::get_type_instance($data->coupon_code, $data->course_id);
         // Perform assertions.
         $typeproc->assert_not_claimed();
         $typeproc->assert_internal_checks($USER->id);
         // Process the claim.
         // The base is to just claim, but various coupons might have their own processing.
-        $typeproc->process_claim($USER->id);
+        // F: the original process_claim was : $typeproc->process_claim($USER->id);
+        $typeproc->process_claim_coursespecific($USER->id, $data->course_id);
     } else {
         echo $OUTPUT->header();
         echo '<div class="block-coupon-container">';

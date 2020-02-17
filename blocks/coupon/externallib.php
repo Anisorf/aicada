@@ -51,6 +51,8 @@ class block_coupon_external extends external_api {
         return array_values($rs);
     }
 
+    // TODO F: Here define a new service, and add it to the /db/services.php
+
     /**
      * Is get_courses() allowed from AJAX?
      *
@@ -431,6 +433,7 @@ class block_coupon_external extends external_api {
 
             switch ($coupon->typ) {
                 case \block_coupon\coupon\generatoroptions::COURSE:
+                case \block_coupon\coupon\generatoroptions::COURSESPECIFIC:
                 case \block_coupon\coupon\generatoroptions::ENROLEXTENSION:
                     // Load courses.
                     $cids = $DB->get_fieldset_select('block_coupon_courses', 'courseid', 'couponid = ?', array($coupon->id));
@@ -812,5 +815,55 @@ class block_coupon_external extends external_api {
         return [$generator, $generatoroptions];
     }
 
+    /**
+     * Builds the coupons and returns the coupon codes.
+     *
+     * @param int $amount Amount of coupons to be generated.
+     * @param int $courses Array of IDs of the courses the coupons will be generated for.
+     * @param array $groups Array of IDs of all groups the users will be added to after using a Coupon.
+     * @return array array containing generator instance and generator options.
+     * @author Frosina Koceva
+     */
+    static private function _request_coupon_codes($amount, $groups = null) {
+        global $USER;
+
+        // Get max length for the coupon code.
+        if (!$couponcodelength = get_config('coupon', 'coupon_code_length')) {
+            $couponcodelength = 16;
+        }
+
+        // Initialize generator options.
+        $generatoroptions = new \block_coupon\coupon\generatoroptions();
+        $generatoroptions->type = \block_coupon\coupon\generatoroptions::COURSESPECIFIC;
+        $generatoroptions->amount = $amount;
+        $generatoroptions->codesize = $couponcodelength;
+        $generatoroptions->cohorts = [];
+        $generatoroptions->courses = null;
+        $generatoroptions->csvrecipients = [];
+        $generatoroptions->emailbody = '';
+        $generatoroptions->emailto = '';
+        $generatoroptions->enrolperiod = 0;// TODO: add enrolperiod?
+        $generatoroptions->extendusers = [];
+        $generatoroptions->generatesinglepdfs = true;
+        $generatoroptions->groups = (empty($groups) ? array() : $groups);
+        $generatoroptions->logoid = 0; // Use default.
+        $generatoroptions->ownerid = $USER->id;
+        $generatoroptions->recipients = [];
+        $generatoroptions->redirecturl = null; // Leave empty; default is my dashboard page.
+        $generatoroptions->senddate = 0;
+
+        // Generate.
+        $generator = new \block_coupon\coupon\generator();
+        $rs = $generator->generate_coupons($generatoroptions);
+
+        // Check if we succeeded.
+        if ($rs !== true) {
+            $errors = $generator->get_errors();
+            throw new block_coupon\exception('err:generating:coupons', implode("\n", $errors));
+        }
+
+        // We made it, so return the generator and options.
+        return [$generator, $generatoroptions];
+    }
 
 }

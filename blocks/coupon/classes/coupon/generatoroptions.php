@@ -55,6 +55,12 @@ class generatoroptions {
     const ENROLEXTENSION = 'enrolext';
 
     /**
+     * COURSESPECIFIC type generator
+     */
+    const COURSESPECIFIC = 'coursespecific';
+
+
+    /**
      * generator type
      * @var string 'course' of 'cohort'
      */

@@ -39,7 +39,7 @@ $string['coupon:extendenrolments'] = 'Generate coupons to extend course enrolmen
 $string['error:sessions-expired'] = 'Your session expired.';
 $string['promo'] = 'Coupon plugin for Moodle';
 $string['promodesc'] = 'This plugin is written by Sebsoft Managed Hosting & Software Development
-(<a href=\'http://www.sebsoft.nl/\' target=\'_new\'>http://sebsoft.nl</a>).<br /><br />
+(<a href=\'http://www.sebsoft.nl/\' target=\'_new\'>http://sebsoft.nl</a>). It has been further customized by Frosina Koceva. <br /><br />
 {$a}<br /><br />';
 
 // DEFAULT.
@@ -74,6 +74,7 @@ $string['error:required'] = 'This field is required.';
 $string['error:numeric_only'] = 'This field must be numeric.';
 $string['error:invalid_email'] = 'Please enter a valid email adress.';
 $string['error:invalid_coupon_code'] = 'You have entered an invalid coupon code.';
+$string['error:invalid_course_id'] = 'You have entered an invalid course.';
 $string['error:coupon_already_used'] = 'The coupon with this code has already been used.';
 $string['error:coupon_reserved'] = 'The coupon with this code has been reserved for an other user.';
 $string['error:unable_to_enrol'] = 'An error occured while trying to enrol you in the new course. Please contact support.';
@@ -123,8 +124,11 @@ $string['label:coupon_role_help'] = 'Select the role with which coupons will be 
 $string['label:coupon_cohorts'] = 'Cohort(s)';
 $string['label:cohort'] = 'Cohort';
 $string['label:coupon_code'] = 'Coupon Code';
+$string['label:course_id'] = 'Course Id';
 $string['label:coupon_code_help'] = 'The coupon code is the unique code which is linked to each individual coupon. You can find this code on your coupon.';
+$string['label:course_id_help'] = 'The course you want to enrol and for which you want to use your code.';
 $string['label:enter_coupon_code'] = 'Please enter your coupon code here';
+$string['label:enter_course_id'] = 'Please enter the course you want to enrol to';
 $string['label:alternative_email'] = 'Alternative email';
 $string['label:alternative_email_help'] = 'Send coupons by default to this email address.';
 $string['label:use_alternative_email'] = 'Use alternative email';

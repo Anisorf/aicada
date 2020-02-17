@@ -85,7 +85,7 @@ $capabilities = array(
     'block/coupon:myaddinstance' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_BLOCK,
-        'archetypes' => array(
+        'archetypes' => array(   // F: give capabilites to specific user for instance add 'manager' => CAP_ALLOW or 'editingteacher'=>CAP_ALLOW
             'user' => CAP_ALLOW,
             'guest' => CAP_PREVENT
         )

@@ -85,6 +85,23 @@ abstract class typebase {
     }
 
     /**
+     * Process the claim for this user and this course
+     * @param null $foruserid
+     * @param null $forcourseid
+     * @throws \coding_exception
+     * @throws \moodle_exception
+     * @author Frosina Koceva
+     */
+    public function process_claim_coursespecific($foruserid = null, $forcourseid = null){
+         global $CFG;
+         // The base is: call claim. Should be sufficient for most coupons.
+         $this->claim($foruserid, $forcourseid);
+
+         $redirect = (empty($this->coupon->redirect_url)) ? $CFG->wwwroot . "/my" : $this->coupon->redirect_url;
+         redirect($redirect, get_string('success:coupon_used', 'block_coupon'));
+     }
+
+    /**
      * Assert claimable.
      * @throws \block_coupon\exception
      */
@@ -137,6 +154,7 @@ abstract class typebase {
         $conditions = array(
             'submission_code' => $couponcode
         );
+        // F: gets the DB record of block_coupon table corresponding that has submission_code equal to couponcode
         $coupon = $DB->get_record('block_coupon', $conditions, '*', MUST_EXIST);
         // Base validation.
         if (empty($coupon)) {
@@ -157,6 +175,45 @@ abstract class typebase {
 
         // Load coupon type and claim().
         $instance = $rc->newInstance($coupon);
+        return $instance;
+    }
+
+    /**
+     * Get class instance for given couponcode and course_id
+     *
+     * @param string $couponcode code to claim
+     * @param int $course_id course id to which to enrol
+     * @return self
+     * @throws \block_coupon\exception
+     * @author Frosina Koceva
+     */
+    public static function get_type_instance_with_course($couponcode, $course_id) {
+        global $DB;
+        // Get record.
+        $conditions = array(
+            'submission_code' => $couponcode
+        );
+        // F: gets the DB record of block_coupon table corresponding that has submission_code equal to couponcode
+        $coupon = $DB->get_record('block_coupon', $conditions, '*', MUST_EXIST);
+        // Base validation.
+        if (empty($coupon)) {
+            throw new exception('error:invalid_coupon_code');
+        } else if (!is_null($coupon->userid) && $coupon->typ != generatoroptions::ENROLEXTENSION) {
+            throw new exception('error:coupon_already_used');
+        }
+
+        // All these checks aren't strictly needed but alas, OOP FTW.
+        $class = '\\block_coupon\\coupon\\types\\' . $coupon->typ;
+        if (!class_exists($class)) {
+            throw new exception('err:no-such-processor', $coupon->typ);
+        }
+        $rc = new \ReflectionClass($class);
+        if (!$rc->implementsInterface('\\block_coupon\\coupon\\icoupontype')) {
+            throw new exception('err:processor-implements', $coupon->typ);
+        }
+
+        // Load coupon type and claim().
+        $instance = $rc->newInstance($coupon, $course_id);
         return $instance;
     }
 

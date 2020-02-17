@@ -28,7 +28,11 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use block_coupon\helper;
+
 defined('MOODLE_INTERNAL') || die();
+
+// require_once($CFG->libdir . '/formslib.php');
 
 /**
  * block_coupon
@@ -40,14 +44,15 @@ defined('MOODLE_INTERNAL') || die();
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class block_coupon extends block_base {
+class block_coupon extends block_base { //F: the class name must start with block, the coupon part could change
 
     /**
      * initializes block
      */
     public function init() {
-        global $CFG;
-        $this->title = get_string('blockname', 'block_coupon');
+        //F: the init method purpose is to give values to any class member variables that need instantiating.
+        global $CFG; //F: Moodle configuration file config.php
+        $this->title = get_string('blockname', 'block_coupon'); //F: the title displayed in the header of our block, blockname is defined in the /lang language file
         include($CFG->dirroot . '/blocks/coupon/version.php');
         $this->version = $plugin->version;
         $this->cron = $plugin->cron;
@@ -58,16 +63,16 @@ class block_coupon extends block_base {
      * @return stdClass
      */
     public function get_content() {
-        global $CFG, $DB, $USER;
-        if ($this->content !== null) {
+        global $CFG, $DB, $USER; // F: $DB Database connection. Used for all access to the database.
+        if ($this->content !== null) { // F: This variable holds all the actual content that is displayed inside each block. Valid values for it are either NULL or an object of class stdClass,
             return $this->content;
         }
 
         $this->content = new stdClass();
-        $this->content->text = '';
-        $this->content->footer = '';
+        $this->content->text = ''; // F: This is a string of arbitrary length and content. It is displayed inside the main area of the block, and can contain HTML.
+        $this->content->footer = ''; // F: This is a string of arbitrary length and contents. It is displayed below the text, using a smaller font size. It can also contain HTML.
 
-        if (empty($this->instance)) {
+        if (empty($this->instance)) { // F: $this->instance is a member variable that holds all the specific information that differentiates one block instance (i.e., the PHP object that embodies it) from another. It is an object of type stdClass retrieved by calling get_record on the table mdl_block_instance. Its member variables, then, directly correspond to the fields of that table. It is initialized immediately after the block object itself is constructed.
             print_error('No instance ' . 'block_coupon');
         }
 
@@ -79,11 +84,11 @@ class block_coupon extends block_base {
         $menuitems = array();
 
         // The "button class" for links.
-        $linkseparator = '';
+        $linkseparator = '<br/>'; // renders the links of the block on new line
         $cfgbuttonclass = get_config('block_coupon', 'buttonclass');
         $btnclass = 'btn-coupon';
         if ($cfgbuttonclass != 'none') {
-            $btnclass .= ' ' . $cfgbuttonclass;
+            $btnclass .= ' '. $cfgbuttonclass;
             $linkseparator = '<br/>';
         }
         // Generate Coupon.
@@ -121,14 +126,28 @@ class block_coupon extends block_base {
         }
 
         // Input Coupon.
+        // F: Input Coupon & select course.
         if (has_capability('block/coupon:inputcoupons', $this->context)) {
             $urlinputcoupon = new moodle_url($CFG->wwwroot . '/blocks/coupon/view/input_coupon.php', $baseparams);
+
+            // F: get courses, I do not use $mform since I should extend this class also with \moodleform (multiple extend can't be done).
+            $courses = helper::get_visible_courses();
+            // And create data for select.
+            $arrcoursesselect = array();
+            foreach ($courses as $course) {
+                $arrcoursesselect[$course->id] = $course->fullname;
+            }
+            $attributes = array('size' => min(20, count($arrcoursesselect)));
 
             $couponform = "
                 <form action='$urlinputcoupon' method='post'>
                     <table>
                         <tr><td>" . get_string('label:enter_coupon_code', 'block_coupon') . ":</td></tr>
-                        <tr><td><input type='text' name='coupon_code'></td></tr>
+                        <tr><td><input type='text' name='coupon_code' placeholder='Inserisci codice' required></td></tr>
+                        
+                        <tr> <!-- F: the select box for selecting a course to which to enrol! -->
+                             <td>" . $this->create_select_course_box($courses) . "</td> 
+                        </tr>
                         <tr><td><input type='submit' name='submitbutton' value='"
                     . get_string('button:submit_coupon_code', 'block_coupon') . "' class='{$btnclass}'></td></tr>
                     </table>
@@ -138,9 +157,11 @@ class block_coupon extends block_base {
                     <input type='hidden' name='sesskey' value='" . sesskey() . "' />
                 </form>";
 
+            // $mform ->addElement('header', 'header', get_string('heading:input_course', 'block_coupon'));
+
             $displayinputhelp = (bool)get_config('block_coupon', 'displayinputhelp');
             if ($displayinputhelp) {
-                $menuitems[] = "<div>".get_string('str:inputhelp', 'block_coupon')."<br/>{$couponform}</div>";
+                $menuitems[] = "<div>".get_string('str:inputhelp', 'block_coupon')."<br/>{$couponform}</div>" ;
 
             } else {
                 $menuitems[] = $couponform;
@@ -170,7 +191,7 @@ class block_coupon extends block_base {
 
         // Now print the menu blocks.
         foreach ($menuitems as $item) {
-            $this->content->footer .= $item . $linkseparator;
+            $this->content->footer .= $item . $linkseparator; // F: Here goes the Generate Coupon link ; Manage Coupon Img; Coupon Request Users; Coupon requests; View ReportsM Viuw unused coupons
         }
     }
 
@@ -180,11 +201,15 @@ class block_coupon extends block_base {
      * @return array page-type prefix => true/false.
      */
     public function applicable_formats() {
-        return array('site-index' => true, 'my' => true);
+        return array('site-index' => true, 'my' => true); //F: if 'my' is true than this block is visible on My Moodle page
     }
 
     /**
      * block specialization
+     * F:  it's guaranteed to be automatically called by Moodle as soon as our instance configuration is loaded and available
+     * (that is, immediately after init() is called). That means before the block's content is computed for the first time,
+     * and indeed before anything else is done with the block. Thus, providing a specialization() method is the natural choice
+     * for any configuration data that needs to be acted upon or made available "as soon as possible", as in this case.
      */
     public function specialization() {
         global $COURSE;
@@ -237,4 +262,21 @@ class block_coupon extends block_base {
         return true;
     }
 
+
+    /**
+     * Generate the select course box
+     *
+     * @param $courses
+     * @return string
+     */
+    public function create_select_course_box($courses){
+        $out = '<select name="course_id">';
+        $out .= '<option value="null">--Seleziona Corso</option>';
+        foreach ($courses as $course){
+            // $out .= '<option>' . $course->fullname . '</option>';
+            $out .= "<option value=\"" . $course->id . "\" >" . $course->fullname . '</option>';
+        }
+        $out .= '</select>';
+        return $out;
+    }
 }

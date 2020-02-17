@@ -28,9 +28,11 @@
  */
 defined('MOODLE_INTERNAL') || die;
 
+// F: Declare the service
+// This step is optional. You can pre-build a service including any web service functions, so the Moodle administrator doesn't need to do it.
 $services = array(
-    'couponservice' => array(
-        'functions' => array(
+    'couponservice' => array(           // F: the name of the web service
+        'functions' => array(           // F: web service functions of this service
             'block_coupon_get_courses',
             'block_coupon_get_cohorts',
             'block_coupon_get_course_groups',
@@ -42,20 +44,22 @@ $services = array(
             'block_coupon_find_users',
             'block_coupon_find_courses',
         ),
-        'requiredcapability' => '',
-        'restrictedusers' => 0,
-        'enabled' => 1,
+        'requiredcapability' => '',  // F: if set, the web service user need this capability to access
+        'restrictedusers' => 0,      // F: if enabled, the Moodle administrator must link some user to this service
+        //into the administration
+        'enabled' => 1,              // F: if enabled, the service can be reachable on a default installation
     )
 );
 
+// F: Declare the web service function
 $functions = array(
-    'block_coupon_get_courses' => array(
-        'classname' => 'block_coupon_external',
-        'methodname' => 'get_courses',
-        'classpath' => 'blocks/coupon/externallib.php',
-        'description' => 'Get courses.',
-        'type' => 'read',
-        'ajax' => true
+    'block_coupon_get_courses' => array(                // F: web service function name
+        'classname' => 'block_coupon_external',         // F: class containing the external function
+        'methodname' => 'get_courses',                  // F: external function name
+        'classpath' => 'blocks/coupon/externallib.php', // F: file containing the class/external function
+        'description' => 'Get courses.',                // F: human readable description of the web service function
+        'type' => 'read',                               // F: database rights of the web service function (read, write)
+        'ajax' => true                                  // F: is the service available to 'internal' ajax calls.
     ),
     'block_coupon_get_cohorts' => array(
         'classname' => 'block_coupon_external',

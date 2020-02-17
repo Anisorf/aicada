@@ -28,6 +28,8 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// F: Amministrazione del sito --> Plugin --> Blocchi --> Coupon
+
 defined('MOODLE_INTERNAL') || die('moodle_internal not defined');
 if ($ADMIN->fulltree) {
     // Logo.
@@ -35,7 +37,8 @@ if ($ADMIN->fulltree) {
             $OUTPUT->image_url('logo', 'block_coupon') . '" /></a>&nbsp;&nbsp;&nbsp;';
     $donate = '<a href="https://customerpanel.sebsoft.nl/sebsoft/donate/intro.php" target="_new"><img src="' .
             $OUTPUT->image_url('donate', 'block_coupon') . '" /></a>';
-    $header = '<div class="block-selectrss-logopromo">' . $image . $donate . '</div>';
+    /* $header = '<div class="block-selectrss-logopromo">' . $image . $donate . '</div>'; */ // F: remove sebsoft logo and donate image
+    $header = '<div class="block-selectrss-logopromo"></div>';
     $settings->add(new admin_setting_heading('block_coupon_logopromo',
             get_string('promo', 'block_coupon'),
             get_string('promodesc', 'block_coupon', $header)));

@@ -21,7 +21,7 @@
  * Encoding     UTF-8
  *
  * @package     block_coupon
- *
+ *PARAM_INT
  * @copyright   Sebsoft.nl
  * @author      Menno de Ridder <menno@sebsoft.nl>
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
@@ -56,8 +56,14 @@ class validator extends \moodleform {
         $mform->addElement('text', 'coupon_code', get_string('label:coupon_code', 'block_coupon'));
         $mform->addRule('coupon_code', get_string('error:required', 'block_coupon'), 'required', null, 'client');
         $mform->addRule('coupon_code', get_string('error:required', 'block_coupon'), 'required', null, 'server');
+        // F: And the course id to which the user want to enrol.
+        $mform->addElement('text', 'course_id', get_string('label:course_id', 'block_coupon'));
+        $mform->addRule('course_id', get_string('error:required', 'block_coupon'), 'required', null, 'client');
+        $mform->addRule('course_id', get_string('error:required', 'block_coupon'), 'required', null, 'server');
+        $mform->setType('coupon_id', PARAM_INT);
         $mform->setType('coupon_code', PARAM_ALPHANUM);
         $mform->addHelpButton('coupon_code', 'label:coupon_code', 'block_coupon');
+        $mform->addHelpButton('course_id', 'label:course_id', 'block_coupon');
 
         $this->add_action_buttons(false, get_string('button:submit_coupon_code', 'block_coupon'));
     }
@@ -74,12 +80,23 @@ class validator extends \moodleform {
         global $USER;
         $errors = parent::validation($data, $files);
 
+        // F: If my custom form with course_id than call get_type_instance by passing course_id, else act as per default
+        if(!empty($data['course_id'])){
+            $typeproc = \block_coupon\coupon\typebase::get_type_instance_with_course($data['coupon_code'], $data['course_id']);
+        }
+        else{
+            // Get type processor.
+            $typeproc = \block_coupon\coupon\typebase::get_type_instance($data['coupon_code']);
+        }
         // Get type processor.
-        $typeproc = \block_coupon\coupon\typebase::get_type_instance($data['coupon_code']);
+        // $typeproc = \block_coupon\coupon\typebase::get_type_instance($data['coupon_code']);
+
+        // F: COURSE CODE
         try {
             // Assert not yet used.
             $typeproc->assert_not_claimed();
             // Assert specialized.
+            // TODO F: not working well, check if necessary
             $typeproc->assert_internal_checks($USER->id);
         } catch (Exception $ex) {
             $errors['coupon_code'] = $ex->getMessage();

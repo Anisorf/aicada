@@ -160,6 +160,8 @@ class generator implements icoupongenerator {
                 $this->validate_cohorts($options->cohorts);
                 break;
 
+            case generatoroptions::COURSESPECIFIC:
+
             default:
                 throw new exception('err:no-courses');
                 break; // Never reached.
@@ -298,6 +300,8 @@ class generator implements icoupongenerator {
                 case generatoroptions::COHORT:
                     $result = $this->insert_coupon_cohorts($objcoupon, $inserterrors);
                     break;
+
+                case generatoroptions::COURSESPECIFIC:
 
                 default:
                     // Should never happen due to earlier checks.

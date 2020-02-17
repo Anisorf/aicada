@@ -28,6 +28,8 @@
  */
 defined('MOODLE_INTERNAL') || die;
 
+// F: The interface between the Moodle core and the plugin is defined here for the most plugin types.
+
 /**
  * Add items to course navigation
  * @param navigation_node $parentnode
@@ -35,6 +37,8 @@ defined('MOODLE_INTERNAL') || die;
  * @param context_course $context
  */
 function block_coupon_extend_navigation_course(navigation_node $parentnode, stdClass $course, context_course $context) {
+    // F: The moodle navigation system has hooks which allows plugins to add links to the navigation menu. Here a course navigation
+    // extension
     global $CFG;
     if (!has_capability('block/coupon:extendenrolments', $context)) {
         return false;
