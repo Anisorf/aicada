@@ -20,7 +20,7 @@
  * File         input_coupon.php
  * Encoding     UTF-8
  *
- * @package     block_coupon
+ * @package     block_couponext
  *
  * @copyright   Sebsoft.nl
  * @author      Menno de Ridder <menno@sebsoft.nl>
@@ -29,8 +29,8 @@
  */
 require_once(dirname(__FILE__) . '/../../../config.php');
 
-use block_coupon\helper;
-use block_coupon\forms\coupon\validator;
+use block_couponext\helper;
+use block_couponext\forms\coupon\validator;
 
 $id = required_param('id', PARAM_INT);
 
@@ -47,20 +47,20 @@ if ($course === false) {
 
 require_login($course, true);
 
-$PAGE->navbar->add(get_string('view:input_coupon:title', 'block_coupon'));
+$PAGE->navbar->add(get_string('view:input_coupon:title', 'block_couponext'));
 
-$url = new moodle_url($CFG->wwwroot . '/blocks/coupon/view/input_coupon.php', array('id' => $id));
+$url = new moodle_url($CFG->wwwroot . '/blocks/couponext/view/input_coupon.php', array('id' => $id));
 $PAGE->set_url($url);
 
-$PAGE->set_title(get_string('view:input_coupon:title', 'block_coupon'));
-$PAGE->set_heading(get_string('view:input_coupon:heading', 'block_coupon'));
+$PAGE->set_title(get_string('view:input_coupon:title', 'block_couponext'));
+$PAGE->set_heading(get_string('view:input_coupon:heading', 'block_couponext'));
 $PAGE->set_context($context);
 $PAGE->set_pagelayout('standard');
 
 // Make sure the moodle editmode is off.
 helper::force_no_editing_mode();
 
-require_capability('block/coupon:inputcoupons', $context);
+require_capability('block/couponext:inputcoupons', $context);
 // Include the form.
 try {
     $mform = new validator($url);
@@ -70,7 +70,7 @@ try {
 
         // Get type processor.
         // F: its passing also the course id, make it posible to distinguish for different type of coupons (e.g. the course type does not need courseid like the coursespecific type)
-        $typeproc = block_coupon\coupon\typebase::get_type_instance($data->coupon_code, $data->course_id);
+        $typeproc = block_couponext\coupon\typebase::get_type_instance($data->coupon_code, $data->course_id);
         // Perform assertions.
         $typeproc->assert_not_claimed();
         $typeproc->assert_internal_checks($USER->id);
@@ -89,7 +89,7 @@ try {
         echo '</div>';
         echo $OUTPUT->footer();
     }
-} catch (block_coupon\exception $e) {
+} catch (block_couponext\exception $e) {
     \core\notification::error($e->getMessage());
 } catch (\Exception $ex) {
     \core\notification::error(get_string('err:coupon:generic'));

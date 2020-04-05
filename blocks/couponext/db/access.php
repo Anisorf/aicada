@@ -15,12 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Capability definitions for block_coupon
+ * Capability definitions for block_couponext
  *
  * File         access.php
  * Encoding     UTF-8
  *
- * @package     block_coupon
+ * @package     block_couponext
  *
  * @copyright   Sebsoft.nl
  * @author      Menno de Ridder <menno@sebsoft.nl>
@@ -30,14 +30,14 @@
 defined('MOODLE_INTERNAL') || die;
 
 $capabilities = array(
-    'block/coupon:administration' => array(
+    'block/couponext:administration' => array(
         'captype' => 'view',
         'contextlevel' => CONTEXT_BLOCK,
         'archetypes' => array(
             'manager' => CAP_ALLOW
         )
     ),
-    'block/coupon:viewreports' => array(
+    'block/couponext:viewreports' => array(
         'captype' => 'view',
         'contextlevel' => CONTEXT_BLOCK,
         'archetypes' => array(
@@ -45,14 +45,14 @@ $capabilities = array(
             'coursecreator' => CAP_ALLOW
         )
     ),
-    'block/coupon:viewallreports' => array(
+    'block/couponext:viewallreports' => array(
         'captype' => 'view',
         'contextlevel' => CONTEXT_BLOCK,
         'archetypes' => array(
             'manager' => CAP_ALLOW
         )
     ),
-    'block/coupon:generatecoupons' => array(
+    'block/couponext:generatecoupons' => array(
         'captype' => 'view',
         'contextlevel' => CONTEXT_BLOCK,
         'archetypes' => array(
@@ -60,7 +60,7 @@ $capabilities = array(
             'coursecreator' => CAP_ALLOW
         )
     ),
-    'block/coupon:inputcoupons' => array(
+    'block/couponext:inputcoupons' => array(
         'captype' => 'view',
         'contextlevel' => CONTEXT_BLOCK,
         'archetypes' => array(
@@ -68,14 +68,14 @@ $capabilities = array(
             'guest' => CAP_PREVENT
         )
     ),
-    'block/coupon:extendenrolments' => array(
+    'block/couponext:extendenrolments' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_BLOCK,
         'archetypes' => array(
             'manager' => CAP_ALLOW
         )
     ),
-    'block/coupon:addinstance' => array(
+    'block/couponext:addinstance' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_BLOCK,
         # 'contextlevel' => CONTEXT_SYSTEM, //F: Per provare a rendere il blocco visibile anche sulla pagine profilo default , ma non funziona !
@@ -83,7 +83,7 @@ $capabilities = array(
             'manager' => CAP_ALLOW
         )
     ),
-    'block/coupon:myaddinstance' => array(
+    'block/couponext:myaddinstance' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_BLOCK,
         # 'contextlevel' => CONTEXT_SYSTEM, //F: Per provare a rendere il blocco visibile anche sulla pagine profilo default , ma non funziona !

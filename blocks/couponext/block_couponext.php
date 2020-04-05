@@ -17,10 +17,10 @@
 /**
  * Block implementation
  *
- * File         block_coupon.php
+ * File         block_couponext.php
  * Encoding     UTF-8
  *
- * @package     block_coupon
+ * @package     block_couponext
  *
  * @copyright   Sebsoft.nl
  * @author      Menno de Ridder <menno@sebsoft.nl>
@@ -28,23 +28,23 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use block_coupon\helper;
+use block_couponext\helper;
 
 defined('MOODLE_INTERNAL') || die();
 
 // require_once($CFG->libdir . '/formslib.php');
 
 /**
- * block_coupon
+ * block_couponext
  *
- * @package     block_coupon
+ * @package     block_couponext
  *
  * @copyright   Sebsoft.nl
  * @author      Menno de Ridder <menno@sebsoft.nl>
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class block_coupon extends block_base { //F: the class name must start with block, the coupon part could change
+class block_couponext extends block_base { //F: the class name must start with block, the coupon part could change
 
     /**
      * initializes block
@@ -52,8 +52,8 @@ class block_coupon extends block_base { //F: the class name must start with bloc
     public function init() {
         //F: the init method purpose is to give values to any class member variables that need instantiating.
         global $CFG; //F: Moodle configuration file config.php
-        $this->title = get_string('blockname', 'block_coupon'); //F: the title displayed in the header of our block, blockname is defined in the /lang language file
-        include($CFG->dirroot . '/blocks/coupon/version.php');
+        $this->title = get_string('blockname', 'block_couponext'); //F: the title displayed in the header of our block, blockname is defined in the /lang language file
+        include($CFG->dirroot . '/blocks/couponext/version.php');
         $this->version = $plugin->version;
         $this->cron = $plugin->cron;
     }
@@ -73,7 +73,7 @@ class block_coupon extends block_base { //F: the class name must start with bloc
         $this->content->footer = ''; // F: This is a string of arbitrary length and contents. It is displayed below the text, using a smaller font size. It can also contain HTML.
 
         if (empty($this->instance)) { // F: $this->instance is a member variable that holds all the specific information that differentiates one block instance (i.e., the PHP object that embodies it) from another. It is an object of type stdClass retrieved by calling get_record on the table mdl_block_instance. Its member variables, then, directly correspond to the fields of that table. It is initialized immediately after the block object itself is constructed.
-            print_error('No instance ' . 'block_coupon');
+            print_error('No instance ' . 'block_couponext');
         }
 
         $arrparams = array();
@@ -85,7 +85,7 @@ class block_coupon extends block_base { //F: the class name must start with bloc
 
         // The "button class" for links.
         $linkseparator = '<br/>'; // renders the links of the block on new line
-        $cfgbuttonclass = get_config('block_coupon', 'buttonclass'); // F: prende dalla pagina di settings quello che è setato nel DB soto mdl_config_plugins per buttonclass
+        $cfgbuttonclass = get_config('block_couponext', 'buttonclass'); // F: prende dalla pagina di settings quello che è setato nel DB soto mdl_config_plugins per buttonclass
         $btnclass = 'btn-coupon';
         if ($cfgbuttonclass != 'none') {
             $btnclass .= ' '. $cfgbuttonclass;
@@ -93,42 +93,42 @@ class block_coupon extends block_base { //F: the class name must start with bloc
         }
         // Generate Coupon.
         $baseparams = array('id' => $this->instance->id);
-        if (has_capability('block/coupon:generatecoupons', $this->context)) {
-            $urlgeneratecoupons = new moodle_url($CFG->wwwroot . '/blocks/coupon/view/generator/index.php', $baseparams);
+        if (has_capability('block/couponext:generatecoupons', $this->context)) {
+            $urlgeneratecoupons = new moodle_url($CFG->wwwroot . '/blocks/couponext/view/generator/index.php', $baseparams);
             $menuitems[] = html_writer::link($urlgeneratecoupons,
-                    get_string('url:generate_coupons', 'block_coupon'), ['class' => $btnclass]);
+                    get_string('url:generate_coupons', 'block_couponext'), ['class' => $btnclass]);
 
-            $urlmanagelogos = new moodle_url($CFG->wwwroot . '/blocks/coupon/view/managelogos.php', $baseparams);
+            $urlmanagelogos = new moodle_url($CFG->wwwroot . '/blocks/couponext/view/managelogos.php', $baseparams);
             $menuitems[] = html_writer::link($urlmanagelogos,
-                    get_string('url:managelogos', 'block_coupon'), ['class' => $btnclass]);
+                    get_string('url:managelogos', 'block_couponext'), ['class' => $btnclass]);
 
             // Add link to requests.
-            $requestusersurl = new \moodle_url($CFG->wwwroot . '/blocks/coupon/view/requests/admin.php',
+            $requestusersurl = new \moodle_url($CFG->wwwroot . '/blocks/couponext/view/requests/admin.php',
                     $baseparams + ['action' => 'users']);
             $menuitems[] = html_writer::link($requestusersurl,
-                    get_string('tab:requestusers', 'block_coupon'), ['class' => $btnclass]);
-            $requestsurl = new \moodle_url($CFG->wwwroot . '/blocks/coupon/view/requests/admin.php',
+                    get_string('tab:requestusers', 'block_couponext'), ['class' => $btnclass]);
+            $requestsurl = new \moodle_url($CFG->wwwroot . '/blocks/couponext/view/requests/admin.php',
                     $baseparams + ['action' => 'requests']);
             $menuitems[] = html_writer::link($requestsurl,
-                    get_string('tab:requests', 'block_coupon'), ['class' => $btnclass]);
+                    get_string('tab:requests', 'block_couponext'), ['class' => $btnclass]);
         }
 
         // View Reports.
-        if (has_capability('block/coupon:viewreports', $this->context)) {
-            $urlreports = new moodle_url($CFG->wwwroot . '/blocks/coupon/view/reports.php', $baseparams);
-            $urlunusedreports = new moodle_url($CFG->wwwroot . '/blocks/coupon/view/couponview.php',
+        if (has_capability('block/couponext:viewreports', $this->context)) {
+            $urlreports = new moodle_url($CFG->wwwroot . '/blocks/couponext/view/reports.php', $baseparams);
+            $urlunusedreports = new moodle_url($CFG->wwwroot . '/blocks/couponext/view/couponview.php',
                     array('id' => $this->instance->id, 'tab' => 'unused'));
 
             $menuitems[] = html_writer::link($urlreports,
-                    get_string('url:view_reports', 'block_coupon'), ['class' => $btnclass]);
+                    get_string('url:view_reports', 'block_couponext'), ['class' => $btnclass]);
             $menuitems[] = html_writer::link($urlunusedreports,
-                    get_string('url:view_unused_coupons', 'block_coupon'), ['class' => $btnclass]);
+                    get_string('url:view_unused_coupons', 'block_couponext'), ['class' => $btnclass]);
         }
 
         // Input Coupon.
         // F: Input Coupon & select course.
-        if (has_capability('block/coupon:inputcoupons', $this->context)) {
-            $urlinputcoupon = new moodle_url($CFG->wwwroot . '/blocks/coupon/view/input_coupon.php', $baseparams);
+        if (has_capability('block/couponext:inputcoupons', $this->context)) {
+            $urlinputcoupon = new moodle_url($CFG->wwwroot . '/blocks/couponext/view/input_coupon.php', $baseparams);
 
             // F: get courses, I do not use $mform since I should extend this class also with \moodleform (multiple extend can't be done).
             $courses = helper::get_visible_courses();
@@ -142,14 +142,14 @@ class block_coupon extends block_base { //F: the class name must start with bloc
             $couponform = "
                 <form action='$urlinputcoupon' method='post'>
                     <table>
-                        <tr><td>" . get_string('label:enter_coupon_code', 'block_coupon') . ":</td></tr>
+                        <tr><td>" . get_string('label:enter_coupon_code', 'block_couponext') . ":</td></tr>
                         <tr><td><input type='text' name='coupon_code' placeholder='Inserisci codice' required></td></tr>
                         
                         <tr> <!-- F: the select box for selecting a course to which to enrol! -->
                              <td>" . $this->create_select_course_box($courses) . "</td> 
                         </tr>
                         <tr><td><input type='submit' name='submitbutton' value='"
-                    . get_string('button:submit_coupon_code', 'block_coupon') . "' class='{$btnclass}'></td></tr>
+                    . get_string('button:submit_coupon_code', 'block_couponext') . "' class='{$btnclass}'></td></tr>
                     </table>
                     <input type='hidden' name='id' value='{$this->instance->id}' />
                     <input type='hidden' name='submitbutton' value='Submit Coupon' />
@@ -157,11 +157,11 @@ class block_coupon extends block_base { //F: the class name must start with bloc
                     <input type='hidden' name='sesskey' value='" . sesskey() . "' />
                 </form>";
 
-            // $mform ->addElement('header', 'header', get_string('heading:input_course', 'block_coupon'));
+            // $mform ->addElement('header', 'header', get_string('heading:input_course', 'block_couponext'));
 
-            $displayinputhelp = (bool)get_config('block_coupon', 'displayinputhelp'); // F: prende dalla pagina di settings quello che è setato nel DB soto mdl_config_plugins per buttonclass
+            $displayinputhelp = (bool)get_config('block_couponext', 'displayinputhelp'); // F: prende dalla pagina di settings quello che è setato nel DB soto mdl_config_plugins per buttonclass
             if ($displayinputhelp) {
-                $menuitems[] = "<div>".get_string('str:inputhelp', 'block_coupon')."<br/>{$couponform}</div>" ;
+                $menuitems[] = "<div>".get_string('str:inputhelp', 'block_couponext')."<br/>{$couponform}</div>" ;
 
             } else {
                 $menuitems[] = $couponform;
@@ -170,12 +170,12 @@ class block_coupon extends block_base { //F: the class name must start with bloc
 
         // Signup using a coupon.
         if (!isloggedin() || isguestuser()) {
-            $urlsignupcoupon = new moodle_url($CFG->wwwroot . '/blocks/coupon/view/signup.php', $baseparams);
+            $urlsignupcoupon = new moodle_url($CFG->wwwroot . '/blocks/couponext/view/signup.php', $baseparams);
             $signupurl = html_writer::link($urlsignupcoupon,
-                    get_string('url:couponsignup', 'block_coupon'), ['class' => $btnclass]);
-            $displaysignuphelp = (bool)get_config('block_coupon', 'displayregisterhelp'); // F: prende dalla pagina di settings quello che è setato nel DB soto mdl_config_plugins per buttonclass
+                    get_string('url:couponsignup', 'block_couponext'), ['class' => $btnclass]);
+            $displaysignuphelp = (bool)get_config('block_couponext', 'displayregisterhelp'); // F: prende dalla pagina di settings quello che è setato nel DB soto mdl_config_plugins per buttonclass
             if ($displaysignuphelp) {
-                $menuitems[] = "<div>".get_string('str:signuphelp', 'block_coupon')."<br/>{$signupurl}</div>";
+                $menuitems[] = "<div>".get_string('str:signuphelp', 'block_couponext')."<br/>{$signupurl}</div>";
 
             } else {
                 $menuitems[] = $signupurl;
@@ -184,9 +184,9 @@ class block_coupon extends block_base { //F: the class name must start with bloc
 
         // Add link to ability to request coupons if applicable.
         if ($DB->record_exists('block_coupon_rusers', ['userid' => $USER->id])) {
-            $urlrequestcoupon = new moodle_url($CFG->wwwroot . '/blocks/coupon/view/requests/userrequest.php', $baseparams);
+            $urlrequestcoupon = new moodle_url($CFG->wwwroot . '/blocks/couponext/view/requests/userrequest.php', $baseparams);
             $menuitems[] = html_writer::link($urlrequestcoupon,
-                    get_string('request:coupons', 'block_coupon'), ['class' => $btnclass]);
+                    get_string('request:coupons', 'block_couponext'), ['class' => $btnclass]);
         }
 
         // Now print the menu blocks.

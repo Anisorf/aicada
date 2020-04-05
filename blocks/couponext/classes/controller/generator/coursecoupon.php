@@ -20,22 +20,22 @@
  * File         coursecoupon.php
  * Encoding     UTF-8
  *
- * @package     block_coupon
+ * @package     block_couponext
  *
  * @copyright   Sebsoft.nl
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace block_coupon\controller\generator;
+namespace block_couponext\controller\generator;
 
 defined('MOODLE_INTERNAL') || die();
 
 use moodle_url;
 use html_writer;
-use block_coupon\helper;
-use block_coupon\coupon\generator;
-use block_coupon\coupon\generatoroptions;
+use block_couponext\helper;
+use block_couponext\coupon\generator;
+use block_couponext\coupon\generatoroptions;
 
 /**
  * block_coupon\controller\generator\coursecoupon
@@ -118,7 +118,7 @@ class coursecoupon {
         // Load generator options.
         $generatoroptions = generatoroptions::from_session();
         // Create form.
-        $mform = new \block_coupon\forms\coupon\course\page1($url, [$generatoroptions]);
+        $mform = new \block_couponext\forms\coupon\course\page1($url, [$generatoroptions]);
 
         if ($mform->is_cancelled()) {
             generatoroptions::clean_session();
@@ -166,7 +166,7 @@ class coursecoupon {
         // Load generator options.
         $generatoroptions = generatoroptions::from_session();
         // Create form.
-        $mform = new \block_coupon\forms\coupon\course\page2($url, [$generatoroptions]);
+        $mform = new \block_couponext\forms\coupon\course\page2($url, [$generatoroptions]);
 
         if ($mform->is_cancelled()) {
             generatoroptions::clean_session();
@@ -199,7 +199,7 @@ class coursecoupon {
         // Load generator options.
         $generatoroptions = generatoroptions::from_session();
         // Create form.
-        $mform = new \block_coupon\forms\coupon\course\page3($url, [$generatoroptions]);
+        $mform = new \block_couponext\forms\coupon\course\page3($url, [$generatoroptions]);
 
         if ($mform->is_cancelled()) {
             generatoroptions::clean_session();
@@ -228,14 +228,14 @@ class coursecoupon {
 
         // Set up preview stuff.
         $bid = helper::find_block_instance_id();
-        $previewurl = new \moodle_url($CFG->wwwroot . '/blocks/coupon/view/preview.php', ['id' => $bid]);
+        $previewurl = new \moodle_url($CFG->wwwroot . '/blocks/couponext/view/preview.php', ['id' => $bid]);
         $args = ['#block-coupon-preview-btn', $previewurl->out()];
-        $this->page->requires->js_call_amd('block_coupon/preview', 'init', $args); // F: Calls JS file from amd
+        $this->page->requires->js_call_amd('block_couponext/preview', 'init', $args); // F: Calls JS file from amd
 
         // Load generator options.
         $generatoroptions = generatoroptions::from_session();
         // Create form.
-        $mform = new \block_coupon\forms\coupon\course\page4($url, [$generatoroptions]);
+        $mform = new \block_couponext\forms\coupon\course\page4($url, [$generatoroptions]);
 
         if ($mform->is_cancelled()) {
             generatoroptions::clean_session();
@@ -296,26 +296,26 @@ class coursecoupon {
                 // Only send if not opted to only generate the codes!
                 if (!$generatoroptions->generatecodesonly) {
                     // Generate and send off.
-                    $coupons = $DB->get_records_list('block_coupon', 'id', $generator->get_generated_couponids());
+                    $coupons = $DB->get_records_list('block_couponext', 'id', $generator->get_generated_couponids());
                     list($rs, $batchid, $ts) = helper::mail_coupons($coupons, $generatoroptions->emailto,
                             $generatoroptions->generatesinglepdfs, false, false, $generatoroptions->batchid);
 
-                    $dlurl = new \moodle_url($CFG->wwwroot . '/blocks/coupon/download.php', ['bid' => $batchid, 't' => $ts]);
-                    $dllink = \html_writer::link($dlurl, get_string('here', 'block_coupon'));
+                    $dlurl = new \moodle_url($CFG->wwwroot . '/blocks/couponext/download.php', ['bid' => $batchid, 't' => $ts]);
+                    $dllink = \html_writer::link($dlurl, get_string('here', 'block_couponext'));
                     if ($rs) {
-                        $redirectmessage = get_string('coupons_generated', 'block_coupon', $dllink);
+                        $redirectmessage = get_string('coupons_generated', 'block_couponext', $dllink);
                     } else {
-                        $redirectmessage = get_string('coupons_generated', 'block_coupon', $dllink);
+                        $redirectmessage = get_string('coupons_generated', 'block_couponext', $dllink);
                     }
                 } else {
-                    $redirectmessage = get_string('coupons_generated_codes_only', 'block_coupon');
+                    $redirectmessage = get_string('coupons_generated_codes_only', 'block_couponext');
                 }
                 generatoroptions::clean_session();
                 // Force message as a notification.
                 \core\notification::success($redirectmessage);
                 redirect(new moodle_url($CFG->wwwroot . '/my'));
             } else {
-                $redirectmessage = get_string('coupons_ready_to_send', 'block_coupon');
+                $redirectmessage = get_string('coupons_ready_to_send', 'block_couponext');
                 \core\notification::success($redirectmessage);
                 redirect(new moodle_url($CFG->wwwroot . '/my'));
             }
@@ -335,14 +335,14 @@ class coursecoupon {
 
         // Set up preview stuff.
         $bid = helper::find_block_instance_id();
-        $previewurl = new \moodle_url($CFG->wwwroot . '/blocks/coupon/view/preview.php', ['id' => $bid]);
+        $previewurl = new \moodle_url($CFG->wwwroot . '/blocks/couponext/view/preview.php', ['id' => $bid]);
         $args = ['#block-coupon-preview-btn', $previewurl->out()];
-        $this->page->requires->js_call_amd('block_coupon/preview', 'init', $args);
+        $this->page->requires->js_call_amd('block_couponext/preview', 'init', $args);
 
         // Load generator options.
         $generatoroptions = generatoroptions::from_session();
         // Create form.
-        $mform = new \block_coupon\forms\coupon\course\page5($url, [$generatoroptions]);
+        $mform = new \block_couponext\forms\coupon\course\page5($url, [$generatoroptions]);
 
         if ($mform->is_cancelled()) {
             generatoroptions::clean_session();
@@ -366,7 +366,7 @@ class coursecoupon {
 
             // Finish.
             generatoroptions::clean_session();
-            $redirectmessage = get_string('coupons_ready_to_send', 'block_coupon');
+            $redirectmessage = get_string('coupons_ready_to_send', 'block_couponext');
             \core\notification::success($redirectmessage);
             redirect(new moodle_url($CFG->wwwroot . '/my'));
         }
