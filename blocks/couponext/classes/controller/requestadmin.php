@@ -53,7 +53,7 @@ class requestadmin {
      */
     protected $output;
     /**
-     * @var \block_coupon_renderer
+     * @var \block_couponext_renderer
      */
     protected $renderer;
 
@@ -142,7 +142,7 @@ class requestadmin {
             $record->configuration = json_encode($options);
             $record->timecreated = time();
             $record->timemodified = $record->timecreated;
-            $record->id = $DB->insert_record('block_coupon_rusers', $record);
+            $record->id = $DB->insert_record('block_couponext_rusers', $record);
 
             $next = $this->get_url(['action' => 'edituser', 'itemid' => $record->id]);
             redirect($next);
@@ -168,7 +168,7 @@ class requestadmin {
         $params = array('action' => 'edituser', 'itemid' => $itemid);
         $url = $this->get_url($params);
 
-        $instance = $DB->get_record('block_coupon_rusers', ['id' => $itemid]);
+        $instance = $DB->get_record('block_couponext_rusers', ['id' => $itemid]);
         $user = \core_user::get_user($instance->userid);
 
         $mform = new \block_couponext\forms\request\user($url, [$instance, $user]);
@@ -207,7 +207,7 @@ class requestadmin {
             // Finish up and save.
             $instance->configuration = json_encode($options);
             $instance->timemodified = time();
-            $DB->update_record('block_coupon_rusers', $instance);
+            $DB->update_record('block_couponext_rusers', $instance);
             redirect($redirect);
         }
 
@@ -287,7 +287,7 @@ class requestadmin {
         $params = array('action' => 'deleteuser', 'itemid' => $itemid);
         $url = $this->get_url($params);
 
-        $instance = $DB->get_record('block_coupon_rusers', ['id' => $itemid]);
+        $instance = $DB->get_record('block_couponext_rusers', ['id' => $itemid]);
         $user = \core_user::get_user($instance->userid);
 
         $options = [
@@ -300,7 +300,7 @@ class requestadmin {
             redirect($redirect);
         } else if ($data = $mform->get_data()) {
             if ((bool) $data->confirm) {
-                $DB->delete_records('block_coupon_rusers', ['id' => $itemid]);
+                $DB->delete_records('block_couponext_rusers', ['id' => $itemid]);
             }
             redirect($redirect);
         }
@@ -337,7 +337,7 @@ class requestadmin {
         $params = array('action' => 'denyrequest', 'itemid' => $itemid);
         $url = $this->get_url($params);
 
-        $instance = $DB->get_record('block_coupon_requests', ['id' => $itemid]);
+        $instance = $DB->get_record('block_couponext_requests', ['id' => $itemid]);
         $user = \core_user::get_user($instance->userid);
 
         $options = [
@@ -348,7 +348,7 @@ class requestadmin {
         if ($mform->is_cancelled()) {
             redirect($redirect);
         } else if ($data = $mform->get_data()) {
-            $DB->delete_records('block_coupon_requests', ['id' => $itemid]);
+            $DB->delete_records('block_couponext_requests', ['id' => $itemid]);
             // Send message if applicable.
             $from = \core_user::get_noreply_user();
             $subject = get_string('request:deny:subject', 'block_couponext');
@@ -377,7 +377,7 @@ class requestadmin {
         $params = array('action' => 'acceptrequest', 'itemid' => $itemid);
         $url = $this->get_url($params);
 
-        $instance = $DB->get_record('block_coupon_requests', ['id' => $itemid]);
+        $instance = $DB->get_record('block_couponext_requests', ['id' => $itemid]);
         $user = \core_user::get_user($instance->userid);
 
         $options = [
@@ -390,12 +390,12 @@ class requestadmin {
         } else if ($data = $mform->get_data()) {
             $dbt = $DB->start_delegated_transaction();
             try {
-                $record = $DB->get_record('block_coupon_requests', ['id' => $itemid]);
+                $record = $DB->get_record('block_couponext_requests', ['id' => $itemid]);
                 $options = unserialize($record->configuration);
                 $generator = new \block_couponext\coupon\generator();
                 $generator->generate_coupons($options);
 
-                $DB->delete_records('block_coupon_requests', ['id' => $record->id]);
+                $DB->delete_records('block_couponext_requests', ['id' => $record->id]);
 
                 // Generate and send off.
                 $coupons = $DB->get_records_list('block_couponext', 'id', $generator->get_generated_couponids());

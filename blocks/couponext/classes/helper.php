@@ -1211,7 +1211,7 @@ class helper {
                 $error->errormessage = get_string('coupon:send:fail', 'block_couponext', 'failed');
                 $error->timecreated = time();
                 $error->iserror = 1;
-                $DB->insert_record('block_coupon_errors', $error);
+                $DB->insert_record('block_couponext_errors', $error);
             }
         }
 

@@ -35,9 +35,9 @@ use block_couponext\helper;
 require_once($CFG->libdir . '/formslib.php');
 
 /**
- * block_coupon\forms\coupon\request\course
+ * block_couponext\forms\coupon\request\course
  *
- * @package     block_coupon
+ * @package     block_couponext
  *
  * @copyright   Sebsoft.nl
  * @author      R.J. van Dongen <rogier@sebsoft.nl>

@@ -417,7 +417,7 @@ class block_coupon_external extends external_api {
         global $DB;
         $reports = array();
 
-        $coupons = block_coupon\helper::get_all_coupons($type, $ownerid, $fromdate, $todate);
+        $coupons = block_couponext\helper::get_all_coupons($type, $ownerid, $fromdate, $todate);
         // Cache-load courses/cohorts.
         $couponids = array_keys($coupons);
         list($cinsql, $cparams) = $DB->get_in_or_equal($couponids);

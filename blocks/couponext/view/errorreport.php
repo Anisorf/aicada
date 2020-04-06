@@ -68,7 +68,7 @@ switch ($action) {
     case 'delete':
         require_sesskey();
         $itemid = required_param('itemid', PARAM_INT);
-        $DB->delete_records('block_coupon_errors', array('id' => $itemid));
+        $DB->delete_records('block_couponext_errors', array('id' => $itemid));
         redirect($PAGE->url);
         break;
     case 'list':

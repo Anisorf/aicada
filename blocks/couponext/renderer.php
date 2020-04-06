@@ -20,7 +20,7 @@
  * File         renderer.php
  * Encoding     UTF-8
  *
- * @package     block_coupon
+ * @package     block_couponext
  *
  * @copyright   Sebsoft.nl
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
@@ -31,13 +31,13 @@ defined('MOODLE_INTERNAL') || die;
 /**
  * Renderer for the coupon block.
  *
- * @package     block_coupon
+ * @package     block_couponext
  *
  * @copyright   Sebsoft.nl
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class block_coupon_renderer extends plugin_renderer_base {
+class block_couponext_renderer extends plugin_renderer_base {
 
     /**
      * Return rendered request details
@@ -109,7 +109,7 @@ class block_coupon_renderer extends plugin_renderer_base {
         $table = new \block_couponext\tables\errorreport($ownerid);
         $table->baseurl = $this->page->url;
 
-        $filtering = new \block_coupoenext\tablefilters\errorreport($this->page->url);
+        $filtering = new \block_couponext\tablefilters\errorreport($this->page->url);
         $table->set_filtering($filtering);
 
         $out = '';

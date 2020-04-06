@@ -47,12 +47,12 @@ function block_couponext_extend_navigation_course(navigation_node $parentnode, s
     if (empty($biid)) {
         return;
     }
-    $icon = new \pix_icon('coupon', get_string('coupon:extendenrol', 'block_couponext'), 'block_couponext');
+    $icon = new \pix_icon('coupon', get_string('couponext:extendenrol', 'block_couponext'), 'block_couponext');
     $icon = null;
     $conditions = array('cid' => $course->id, 'id' => $biid);
     $action = new \moodle_url($CFG->wwwroot . '/blocks/couponext/view/generator/extendenrolment.php', $conditions);
-    $parentnode->add(get_string('coupon:extendenrol', 'block_couponext'), $action, navigation_node::TYPE_CUSTOM,
-            get_string('coupon:extendenrol', 'block_couponext'), 'cpextendenrol', $icon);
+    $parentnode->add(get_string('couponext:extendenrol', 'block_couponext'), $action, navigation_node::TYPE_CUSTOM,
+            get_string('couponext:extendenrol', 'block_couponext'), 'cpextendenrol', $icon);
 }
 
 /**

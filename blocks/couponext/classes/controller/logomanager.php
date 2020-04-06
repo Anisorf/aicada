@@ -57,7 +57,7 @@ class logomanager {
     protected $output;
 
     /**
-     * @var \block_coupon_renderer
+     * @var \block_couponext_renderer
      */
     protected $renderer;
 

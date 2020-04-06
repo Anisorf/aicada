@@ -28,13 +28,13 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 // Capabilities.
-$string['coupon:addinstance'] = 'Ajouter un nouveau bloc Coupon';
-$string['coupon:administration'] = 'Gérer le bloc Coupon';
-$string['coupon:generatecoupons'] = 'Générer un nouveau coupon';
-$string['coupon:inputcoupons'] = 'Utiliser un coupon pour vous abonner';
-$string['coupon:myaddinstance'] = 'Ajouter un nouveau bloc de coupon à ma page Mon Moodle';
-$string['coupon:viewreports'] = 'Afficher les rapports sur les coupons (pour mes coupons)';
-$string['coupon:viewallreports'] = 'Afficher les rapports sur les coupons (pour tous les coupons)';
+$string['couponext:addinstance'] = 'Ajouter un nouveau bloc Coupon';
+$string['couponext:administration'] = 'Gérer le bloc Coupon';
+$string['couponext:generatecoupons'] = 'Générer un nouveau coupon';
+$string['couponext:inputcoupons'] = 'Utiliser un coupon pour vous abonner';
+$string['couponext:myaddinstance'] = 'Ajouter un nouveau bloc de coupon à ma page Mon Moodle';
+$string['couponext:viewreports'] = 'Afficher les rapports sur les coupons (pour mes coupons)';
+$string['couponext:viewallreports'] = 'Afficher les rapports sur les coupons (pour tous les coupons)';
 $string['error:sessions-expired'] = 'Votre session a expiré.';
 $string['promo'] = 'Coupon plugin pour Moodle';
 $string['promodesc'] = 'This plugin is written by Sebsoft Managed Hosting & Software Development
@@ -244,7 +244,7 @@ $string['error:recipients-empty'] = 'Veuillez entrer au moins un utilisateur.';
 $string['error:recipients-email-invalid'] = 'L\'adresse e-mail {$ a-> email} n\'est pas valide. Veuillez le corriger dans le fichier csv.';
 $string['coupon_recipients_desc'] = 'Les colonnes suivantes doivent être présentes dans le CSV téléchargé, indépendamment de l\'ordre: E-mail, Sexe, Nom.<br/>
 Pour chaque personne donnée dans le CSV, un coupon est généré et envoyé par courrier électronique à l\'utilisateur.<br/>
-S\'il vous plaît prendre note que ces coupons seront créés a-synchrone par une tâche en arrière-plan; <I> pas </ i> instantanément.
+S\'il vous plaît prendre note que ces coupons seront créés a-synchrone par une tâche en arrière-plan; <I> pas </i> instantanément.
 C\'est parce que le processus de génération de coupons peut être assez long, surtout pour une grande quantité d\'utilisateurs.';
 $string['report:download-excel'] = 'Télécharger les coupons inutilisés';
 

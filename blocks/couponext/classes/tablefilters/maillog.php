@@ -20,23 +20,23 @@
  * File         maillog.php
  * Encoding     UTF-8
  *
- * @package     block_coupon
+ * @package     block_couponext
  *
  * @copyright   Sebsoft.nl
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace block_coupon\tablefilters;
+namespace block_couponext\tablefilters;
 
 defined('MOODLE_INTERNAL') || die();
 
-use \block_coupon\filtering\filtering;
+use \block_couponext\filtering\filtering;
 
 /**
- * block_coupon\tables\maillog
+ * block_couponext\tables\maillog
  *
- * @package     block_coupon
+ * @package     block_couponext
  *
  * @copyright   Sebsoft.nl
  * @author      R.J. van Dongen <rogier@sebsoft.nl>

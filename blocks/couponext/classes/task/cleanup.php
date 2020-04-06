@@ -73,16 +73,16 @@ class cleanup extends \core\task\scheduled_task {
             // Delegated transaction to ensure everything is removed.
             $transaction = $DB->start_delegated_transaction();
             $DB->delete_records_list('block_couponext', 'id', $couponids);
-            $DB->delete_records_list('block_coupon_cohorts', 'couponid', $couponids);
-            $DB->delete_records_list('block_coupon_groups', 'couponid', $couponids);
-            $DB->delete_records_list('block_coupon_courses', 'couponid', $couponids);
-            $DB->delete_records_list('block_coupon_errors', 'couponid', $couponids);
+            $DB->delete_records_list('block_couponext_cohorts', 'couponid', $couponids);
+            $DB->delete_records_list('block_couponext_groups', 'couponid', $couponids);
+            $DB->delete_records_list('block_couponext_courses', 'couponid', $couponids);
+            $DB->delete_records_list('block_couponext_errors', 'couponid', $couponids);
             $DB->commit_delegated_transaction($transaction);
         }
         // Standard cleaning, just to be sure.
-        $DB->execute('DELETE FROM {block_coupon_courses} WHERE couponid NOT IN (SELECT id FROM {block_couponext})');
-        $DB->execute('DELETE FROM {block_coupon_cohorts} WHERE couponid NOT IN (SELECT id FROM {block_couponext})');
-        $DB->execute('DELETE FROM {block_coupon_groups} WHERE couponid NOT IN (SELECT id FROM {block_couponext})');
+        $DB->execute('DELETE FROM {block_couponext_courses} WHERE couponid NOT IN (SELECT id FROM {block_couponext})');
+        $DB->execute('DELETE FROM {block_couponext_cohorts} WHERE couponid NOT IN (SELECT id FROM {block_couponext})');
+        $DB->execute('DELETE FROM {block_couponext_groups} WHERE couponid NOT IN (SELECT id FROM {block_couponext})');
     }
 
 }

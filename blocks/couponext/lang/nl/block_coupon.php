@@ -17,10 +17,10 @@
 /**
  * Language file for block_coupon, NL
  *
- * File         block_coupon.php
+ * File         block_couponext.php
  * Encoding     UTF-8
  *
- * @package     block_coupon
+ * @package     block_couponext
  *
  * @copyright   Sebsoft.nl
  * @author      Menno de Ridder <menno@sebsoft.nl>
@@ -28,14 +28,14 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 // Capabilities.
-$string['coupon:addinstance'] = 'Voeg een nieuw Coupon blok toe';
-$string['coupon:administration'] = 'Beheer het Moodle Coupon blok';
-$string['coupon:generatecoupons'] = 'Genereer een nieuwe Moodle Coupon';
-$string['coupon:inputcoupons'] = 'Gebruik een Coupon';
-$string['coupon:myaddinstance'] = 'Voeg een nieuw Coupon blok toe aan de Mijn Moodle pagina';
-$string['coupon:viewreports'] = 'Toon Coupon rapportages (voor mijn coupons)';
-$string['coupon:viewallreports'] = 'Toon Coupon rapportages (voor alle coupons)';
-$string['coupon:extendenrolments'] = 'Coupons genereren tbv verlenging cursus aanmelding';
+$string['couponext:addinstance'] = 'Voeg een nieuw Coupon blok toe';
+$string['couponext:administration'] = 'Beheer het Moodle Coupon blok';
+$string['couponext:generatecoupons'] = 'Genereer een nieuwe Moodle Coupon';
+$string['couponext:inputcoupons'] = 'Gebruik een Coupon';
+$string['couponext:myaddinstance'] = 'Voeg een nieuw Coupon blok toe aan de Mijn Moodle pagina';
+$string['couponext:viewreports'] = 'Toon Coupon rapportages (voor mijn coupons)';
+$string['couponext:viewallreports'] = 'Toon Coupon rapportages (voor alle coupons)';
+$string['couponext:extendenrolments'] = 'Coupons genereren tbv verlenging cursus aanmelding';
 $string['error:sessions-expired'] = 'Uw sessie is verlopen.';
 $string['promo'] = 'Coupon plugin voor Moodle';
 $string['promodesc'] = 'Deze plugin is geschreven door Sebsoft Managed Hosting & Software Development

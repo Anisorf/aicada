@@ -38,9 +38,9 @@ use block_couponext\coupon\generator;
 use block_couponext\coupon\generatoroptions;
 
 /**
- * block_coupon\controller\generator\coursecoupon
+ * block_couponext\controller\generator\coursecoupon
  *
- * @package     block_coupon
+ * @package     block_couponext
  *
  * @copyright   Sebsoft.nl
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
@@ -59,7 +59,7 @@ class coursecoupon {
     protected $output;
 
     /**
-     * @var \block_coupon_renderer
+     * @var \block_couponext_renderer
      */
     protected $renderer;
 

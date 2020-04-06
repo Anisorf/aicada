@@ -385,7 +385,7 @@ class generator implements icoupongenerator {
                 'courseid' => $course->id
             );
             // And insert in db.
-            if (!$DB->insert_record('block_coupon_courses', $record)) {
+            if (!$DB->insert_record('block_couponext_courses', $record)) {
                 $errors[] = 'Failed to create course link ' . $course->id . ' record for coupon id ' . $coupon->id . '.';
             }
         }
@@ -397,7 +397,7 @@ class generator implements icoupongenerator {
                     'groupid' => $group->id
                 );
                 // And insert in db.
-                if (!$DB->insert_record('block_coupon_groups', $record)) {
+                if (!$DB->insert_record('block_couponext_groups', $record)) {
                     $errors[] = 'Failed to create group link ' . $group->id . ' record for coupon id ' . $coupon->id . '.';
                 }
             }
@@ -422,7 +422,7 @@ class generator implements icoupongenerator {
                 'cohortid' => $cohort->id
             );
             // And insert in db.
-            if (!$DB->insert_record('block_coupon_cohorts', $record)) {
+            if (!$DB->insert_record('block_couponext_cohorts', $record)) {
                 $errors[] = 'Failed to create cohort link ' . $cohort->id . ' record for coupon id ' . $coupon->id . '.';
             }
         }

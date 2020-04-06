@@ -57,7 +57,7 @@ class myrequests {
     protected $output;
 
     /**
-     * @var \block_coupon_renderer
+     * @var \block_couponext_renderer
      */
     protected $renderer;
 
@@ -148,7 +148,7 @@ class myrequests {
         $params = array('action' => 'delete', 'itemid' => $itemid);
         $url = $this->get_url($params);
 
-        $instance = $DB->get_record('block_coupon_requests', ['id' => $itemid]);
+        $instance = $DB->get_record('block_couponext_requests', ['id' => $itemid]);
         $user = \core_user::get_user($instance->userid);
         // Assert correct user.
         $this->assert_user($user->id);
@@ -163,7 +163,7 @@ class myrequests {
             redirect($redirect);
         } else if ($data = $mform->get_data()) {
             if ((bool) $data->confirm) {
-                $DB->delete_records('block_coupon_requests', ['id' => $itemid]);
+                $DB->delete_records('block_couponext_requests', ['id' => $itemid]);
             }
             redirect($redirect);
         }
@@ -186,7 +186,7 @@ class myrequests {
         $params = array('action' => 'newrequest');
         $url = $this->get_url($params);
 
-        $instance = $DB->get_record('block_coupon_rusers', ['userid' => $USER->id]);
+        $instance = $DB->get_record('block_couponext_rusers', ['userid' => $USER->id]);
 
         $mform = new \block_couponext\forms\coupon\request\course($url, [$instance, $USER]);
 
@@ -215,7 +215,7 @@ class myrequests {
             $record->configuration = serialize($generatoroptions);
             $record->timecreated = time();
             $record->timemodified = $record->timecreated;
-            $record->id = $DB->insert_record('block_coupon_requests', $record);
+            $record->id = $DB->insert_record('block_couponext_requests', $record);
 
             // SUCCESS!
             redirect($redirect);
@@ -233,7 +233,7 @@ class myrequests {
     protected function process_request_details() {
         global $DB;
         $itemid = required_param('itemid', PARAM_INT);
-        $instance = $DB->get_record('block_coupon_requests', ['id' => $itemid]);
+        $instance = $DB->get_record('block_couponext_requests', ['id' => $itemid]);
         $user = \core_user::get_user($instance->userid);
         // Assert correct user.
         $this->assert_user($user->id);

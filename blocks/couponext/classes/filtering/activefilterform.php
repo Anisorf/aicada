@@ -20,7 +20,7 @@
  * File         activefilterform.php
  * Encoding     UTF-8
  *
- * @package     block_coupon
+ * @package     block_couponext
  *
  * @copyright   1999 Martin Dougiamas  http://dougiamas.com
  * @copyright   Sebsoft.nl
@@ -28,16 +28,16 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
 
-namespace block_coupon\filtering;
+namespace block_couponext\filtering;
 
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/lib/formslib.php');
 
 /**
- * block_coupon\filtering\activefilterform
+ * block_couponext\filtering\activefilterform
  *
- * @package     block_coupon
+ * @package     block_couponext
  *
  * @copyright   1999 Martin Dougiamas  http://dougiamas.com
  * @copyright   Sebsoft.nl

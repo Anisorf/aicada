@@ -20,14 +20,14 @@
  * File         provider.php
  * Encoding     UTF-8
  *
- * @package     block_coupon
+ * @package     block_couponext
  *
  * @copyright   Sebsoft.nl
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace block_coupon\privacy;
+namespace block_couponext\privacy;
 
 defined('MOODLE_INTERNAL') || die;
 
@@ -40,7 +40,7 @@ use core_privacy\local\request\writer;
 /**
  * Privacy provider.
  *
- * @package     block_coupon
+ * @package     block_couponext
  *
  * @copyright   Sebsoft.nl
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
@@ -51,7 +51,7 @@ class provider implements
         \core_privacy\local\request\plugin\provider {
 
     /**
-     * Provides meta data that is stored about a user with block_coupon
+     * Provides meta data that is stored about a user with block_couponext
      *
      * @param  collection $collection A collection of meta data items to be added to.
      * @return  collection Returns the collection of metadata.

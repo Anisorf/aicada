@@ -1,6 +1,6 @@
 {
   "name": "moodle-block_couponext",
-  "title": "Moodle coupon / voucher",
+  "title": "Moodle couponext / voucher",
   "version": "4.0.0",
   "devDependencies": {
     "grunt": "^1.0.3",

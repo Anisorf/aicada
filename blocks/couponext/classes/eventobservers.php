@@ -54,7 +54,7 @@ class eventobservers
         if (empty($couponids)) {
             return;
         }
-        $DB->delete_records('block_coupon_courses', array('courseid' => $event->objectid));
+        $DB->delete_records('block_couponext_courses', array('courseid' => $event->objectid));
 
         list($insql, $params) = $DB->get_in_or_equal($couponids);
         $remainingcouponids = $DB->get_fieldset_select('block_couponext_courses', 'DISTINCT couponid', 'couponid '.$insql, $params);

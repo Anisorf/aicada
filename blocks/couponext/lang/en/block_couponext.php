@@ -44,7 +44,7 @@ $string['promodesc'] = 'This plugin is written by Sebsoft Managed Hosting & Soft
 
 // DEFAULT.
 $string['blockname'] = 'Coupon Ext';
-$string['pluginname'] = 'Coupon Ext';
+$string['pluginname'] = 'Coupon Extended';
 
 // Headers.
 $string['heading:administration'] = 'Manage';

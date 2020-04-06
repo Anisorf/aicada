@@ -183,7 +183,7 @@ class block_couponext extends block_base { //F: the class name must start with b
         }
 
         // Add link to ability to request coupons if applicable.
-        if ($DB->record_exists('block_coupon_rusers', ['userid' => $USER->id])) {
+        if ($DB->record_exists('block_couponext_rusers', ['userid' => $USER->id])) {
             $urlrequestcoupon = new moodle_url($CFG->wwwroot . '/blocks/couponext/view/requests/userrequest.php', $baseparams);
             $menuitems[] = html_writer::link($urlrequestcoupon,
                     get_string('request:coupons', 'block_couponext'), ['class' => $btnclass]);
