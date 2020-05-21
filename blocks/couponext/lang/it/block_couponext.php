@@ -28,19 +28,20 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 // Capabilities.
-$string['couponext:addinstance'] = 'Add a new Coupon block';
-$string['couponext:administration'] = 'Administrate the Coupon block';
-$string['couponext:generatecoupons'] = 'Generate a new coupon';
-$string['couponext:inputcoupons'] = 'Use a coupon to subscribe';
-$string['couponext:myaddinstance'] = 'Add a new Coupon block to the My Moodle page';
-$string['couponext:viewreports'] = 'View Coupon reports (for my owned coupons)';
-$string['couponext:viewallreports'] = 'View Coupon reports (for all coupons)';
-$string['couponext:extendenrolments'] = 'Generate coupons to extend course enrolments';
+$string['couponext:addinstance'] = 'Aggiungi un nuovo blocco Coupon';
+$string['couponext:administration'] = 'Amministrare il blocco Coupon';
+$string['couponext:generatecoupons'] = 'Genera nuovi coupon';
+$string['couponext:inputcoupons'] = 'Usa un coupon per iscriverti';
+$string['couponext:myaddinstance'] = 'Aggiungi un nuovo blocco Coupon alla pagina My Moodle';
+$string['couponext:viewreports'] = 'Visualizza i report sui coupon (per i miei coupon)';
+$string['couponext:viewallreports'] = 'Visualizza i report sui coupon (per tutti i coupon)';
+$string['couponext:extendenrolments'] = 'Genera coupon per estendere le iscrizioni ai corsi';
 $string['couponext:extendenrol'] = 'TODO';
-$string['error:sessions-expired'] = 'Your session expired.';
-$string['promo'] = 'Coupon plugin for Moodle';
-$string['promodesc'] = 'This plugin is written by Sebsoft Managed Hosting & Software Development
-(<a href=\'http://www.sebsoft.nl/\' target=\'_new\'>http://sebsoft.nl</a>). It has been further customized by Frosina Koceva. <br /><br />
+$string['error:sessions-expired'] = 'La tua sessione è scaduta.';
+$string['promo'] = 'Plugin coupon per Moodle';
+$string['promodesc'] = '
+Questo plugin è stato scritto da Sebsoft Managed Hosting & Software Development
+(<a href=\'http://www.sebsoft.nl/\' target=\'_new\'>http://sebsoft.nl</a>). È stato ulteriormente personalizzato da Frosina Koceva. <br /><br />
 {$a}<br /><br />';
 
 // DEFAULT.
@@ -48,88 +49,89 @@ $string['blockname'] = 'Coupon Ext';
 $string['pluginname'] = 'Coupon Extended';
 
 // Headers.
-$string['heading:administration'] = 'Manage';
-$string['heading:generatecoupons'] = 'Generate coupons';
+$string['heading:administration'] = 'Gestire';
+$string['heading:generatecoupons'] = 'Genera coupon';
 $string['heading:inputcoupons'] = 'Input Coupon';
-$string['heading:label_instructions'] = 'Instructions';
-$string['heading:coupon_type'] = 'Type of coupon';
+$string['heading:label_instructions'] = 'Istruzioni';
+$string['heading:coupon_type'] = 'Tipo di coupon';
 $string['heading:input_coupon'] = 'Input coupon';
-$string['heading:general_settings'] = 'Last settings';
-$string['heading:input_cohorts'] = 'Select cohort(s)';
-$string['heading:input_course'] = 'Select course(s)';
-$string['heading:input_groups'] = 'Select groups';
-$string['heading:imageupload'] = 'Upload image';
+$string['heading:general_settings'] = 'Ultime impostazioni';
+$string['heading:input_cohorts'] = 'Seleziona gruppo globale(i) (cohort)';
+$string['heading:input_course'] = 'Seleziona courso(i)';
+$string['heading:input_groups'] = 'Seleziona gruppi';
+$string['heading:imageupload'] = 'Carica immagine';
 $string['heading:info'] = 'Info';
 $string['heading:courseandvars'] = 'Select coupon variables, course(s) and course enrolment variables';
 $string['heading:coursegroups'] = 'Connect course groups to selected courses';
 $string['heading:cohortandvars'] = 'Select coupon variables, cohort(s) and course enrolment variables';
 $string['heading:cohortlinkcourses'] = 'Link courses to cohort(s)';
-$string['heading:generatormethod'] = 'Select how you want to generate the coupons';
-$string['heading:csvForm'] = 'CSV settings';
+$string['heading:generatormethod'] = 'Seleziona come vuoi generare i coupon';
+$string['heading:csvForm'] = 'Impostazioni CSV';
 $string['heading:amountForm'] = 'Amount settings';
 $string['heading:manualForm'] = 'Manual settings';
 
 // Errors.
-$string['error:nopermission'] = 'You have no permission to do this';
-$string['error:required'] = 'This field is required.';
-$string['error:numeric_only'] = 'This field must be numeric.';
-$string['error:invalid_email'] = 'Please enter a valid email adress.';
-$string['error:invalid_coupon_code'] = 'You have entered an invalid coupon code.';
-$string['error:invalid_course_id'] = 'You have entered an invalid course.';
-$string['error:coupon_already_used'] = 'The coupon with this code has already been used.';
-$string['error:coupon_reserved'] = 'The coupon with this code has been reserved for an other user.';
-$string['error:unable_to_enrol'] = 'An error occured while trying to enrol you in the new course. Please contact support.';
-$string['error:missing_course'] = 'The course linked to this coupon does not exist anymore. Please contact support.';
-$string['error:cohort_sync'] = 'An error occured while trying to synchronize the cohorts. Please contact support.';
-$string['error:plugin_disabled'] = 'The cohort_sync plugin has been disabled. Please contact support.';
+$string['error:nopermission'] = 'Non hai il permesso di farlo';
+$string['error:required'] = 'Questo campo è obbligatorio.';
+$string['error:numeric_only'] = 'Questo campo deve essere numerico.';
+$string['error:invalid_email'] = 'Inserisci un indirizzo email valido.';
+$string['error:invalid_coupon_code'] = 'Hai inserito un codice non valido.';
+$string['error:invalid_course_id'] = 'Hai inserito un corso non valido.';
+$string['error:coupon_already_used'] = 'Questo codice è già stato utilizzato.';
+$string['error:coupon_reserved'] = 'Questo codice è stato riservato per un altro utente.';
+$string['error:unable_to_enrol'] = 'Si è verificato un errore durante il tentativo di iscrizione al nuovo corso. Si prega di contattare l\'assistenza.';
+$string['error:missing_course'] = 'Il corso collegato a questo coupon non esiste più. Si prega di contattare l\'assistenza.';
+$string['error:cohort_sync'] = '
+Si è verificato un errore durante il tentativo di sincronizzare le cohorts. Si prega di contattare l\'assistenza.';
+$string['error:plugin_disabled'] = 'Il plug-in cohort_sync è stato disabilitato. Si prega di contattare l\'assistenza.';
 $string['error:missing_cohort'] = 'The cohort(s) linked to this coupon does not exist anymore. Please contact support.';
 $string['error:missing_group'] = 'The group(s) linked to this coupon does not exist anymore. Please contact support.';
 $string['error:coupon_amount_too_high'] = 'Please enter an amonut between {$a->min} and {$a->max}.';
 $string['error:alternative_email_required'] = 'If you have checked \'use alternative email\' this field is required.';
 $string['error:alternative_email_invalid'] = 'If you have checked \'use alternative email\' this field should contain a valid email address.';
-$string['error:course-not-found'] = 'The course could not be found.';
+$string['error:course-not-found'] = 'Il corso non è stato trovato.';
 $string['error:course-coupons-not-copied'] = 'An error occured while trying to copy coupon-courses to the new coupon_courses table. Please contact support.';
-$string['error:wrong_code_length'] = 'Please enter a number between 6 and 32.';
-$string['error:no_coupons_submitted'] = 'None of your coupons have been used yet.';
+$string['error:wrong_code_length'] = 'Inserisci un numero compreso tra 6 e 32.';
+$string['error:no_coupons_submitted'] = 'Nessuno dei tuoi codice è stato ancora utilizzato.';
 $string['error:wrong_image_size'] = 'The uploaded background does not have the required size. Please upload an image with a ratio of 210 mm by 297 mm.';
 $string['error:moodledata_not_writable'] = 'Your moodledata/coupon_logos folder is not writable. Please fix your permissions.';
-$string['error:wrong_doc_page'] = 'You are trying to access a page that does not exist.';
+$string['error:wrong_doc_page'] = 'Stai tentando di accedere a una pagina che non esiste.';
 
 // Success strings.
-$string['success:coupon_used'] = 'Coupon used - You can now access the course(s)';
+$string['success:coupon_used'] = 'Codice utilizzato: ora puoi accedere al corso';
 $string['success:uploadimage'] = 'Your new coupon image has been uploaded.';
 
 // URL texts.
-$string['url:generate_coupons'] = 'Generate Coupon';
-$string['url:api_docs'] = 'API Documentation';
-$string['url:uploadimage'] = 'Change coupon image';
-$string['url:input_coupon'] = 'Input Coupon';
-$string['url:view_reports'] = 'View reports';
-$string['url:view_unused_coupons'] = 'View unused coupons';
+$string['url:generate_coupons'] = 'Genera Codici';
+$string['url:api_docs'] = 'API Documentazione';
+$string['url:uploadimage'] = 'Cambia immagine coupon';
+$string['url:input_coupon'] = 'Codici di input';
+$string['url:view_reports'] = 'Vedi report';
+$string['url:view_unused_coupons'] = 'Visualizza codici non utilizzati';
 
 // Form Labels.
-$string['label:coupon_type'] = 'Generate coupon(s) for';
-$string['label:coupon_email'] = 'Email address';
-$string['label:coupon_amount'] = 'Amount of coupons';
-$string['label:type_course'] = 'Course enrolment';
-$string['label:type_cohorts'] = 'Enrolment in cohort(s)';
-$string['label:coupon_connect_course'] = 'Add course(s)';
-$string['label:coupon_connect_course_help'] = 'Select all courses you wish to add to the cohort.
-    <br /><b><i>Note: </i></b>All users who are already enrolled in this cohort will also be enrolled in the selected courses!';
-$string['label:connected_courses'] = 'Connected course(s)';
+$string['label:coupon_type'] = 'Genera codice(i) per';
+$string['label:coupon_email'] = 'Indirizzo email';
+$string['label:coupon_amount'] = 'Quantità di codici';
+$string['label:type_course'] = 'Iscrizione al corso';
+$string['label:type_cohorts'] = 'Iscrizione al gruppo globale cohort(s)';
+$string['label:coupon_connect_course'] = 'Aggiungi corso/i';
+$string['label:coupon_connect_course_help'] = 'Seleziona tutti i corsi che desideri aggiungere alla cohort.
+    <br /><b><i>Nota: </i></b>Tutti gli utenti che sono già iscritti a questa cohort saranno anche iscritti ai corsi selezionati!';
+$string['label:connected_courses'] = 'Corso/i collegato/i';
 $string['label:no_courses_connected'] = 'There are no courses connected to this cohort.';
-$string['label:coupon_courses'] = 'Course(s)';
-$string['label:coupon_courses_help'] = 'Select the courses your students should be enrolled in';
-$string['label:coupon_role'] = 'Role';
+$string['label:coupon_courses'] = 'Corso/i';
+$string['label:coupon_courses_help'] = 'Seleziona i corsi ai quali dovrebbero iscriversi gli studenti';
+$string['label:coupon_role'] = 'Ruolo';
 $string['label:coupon_role_help'] = 'Select the role with which coupons will be configured or leave empty for the configured default (usually student).';
 $string['label:coupon_cohorts'] = 'Cohort(s)';
 $string['label:cohort'] = 'Cohort';
 $string['label:coupon_code'] = 'Coupon Code';
 $string['label:course_id'] = 'Course Id';
 $string['label:coupon_code_help'] = 'The coupon code is the unique code which is linked to each individual coupon. You can find this code on your coupon.';
-$string['label:course_id_help'] = 'The course you want to enrol and for which you want to use your code.';
-$string['label:enter_coupon_code'] = 'Please enter your coupon code here';
-$string['label:enter_course_id'] = 'Please enter the course you want to enrol to';
+$string['label:course_id_help'] = 'Il corso che desideri iscrivere e per il quale desideri utilizzare il tuo codice.';
+$string['label:enter_coupon_code'] = 'Inserisci qui il tuo codice';
+$string['label:enter_course_id'] = 'Inserisci il corso a cui desideri iscriverti';
 $string['label:alternative_email'] = 'Alternative email';
 $string['label:alternative_email_help'] = 'Send coupons by default to this email address.';
 $string['label:use_alternative_email'] = 'Use alternative email';
@@ -172,13 +174,13 @@ $string['label:coupon_courses_help'] = 'Select the courses your users will be en
 $string['label:renderqrcode'] = 'Use QR Code?';
 $string['label:renderqrcode_help'] = 'Enable or disable this option to include QR codes in the generated PDF.';
 // Buttons.
-$string['button:next'] = 'Next';
-$string['button:save'] = 'Generate Coupons';
-$string['button:submit_coupon_code'] = 'Submit Coupon';
+$string['button:next'] = 'Avanti';
+$string['button:save'] = 'Genera Codici';
+$string['button:submit_coupon_code'] = 'Invia Codici';
 
 // View strings.
-$string['view:generate_coupon:title'] = 'Generate Coupon';
-$string['view:generate_coupon:heading'] = 'Generate Coupon';
+$string['view:generate_coupon:title'] = 'Genera Codici';
+$string['view:generate_coupon:heading'] = 'Genera Codici';
 $string['view:generator:course:heading'] = 'Generate course coupon(s)';
 $string['view:generator:course:title'] = 'Generate course coupon(s)';
 $string['view:generator:cohort:heading'] = 'Generate cohort coupon(s)';
@@ -278,27 +280,27 @@ Please take note these coupons will be created a-synchronous by a background tas
 This is because the process of generating coupons may be quite lengthy, especially for a large amount of users.';
 $string['report:download-excel'] = 'Download unused coupons';
 
-$string['page:generate_coupon.php:title'] = 'Generate coupons';
-$string['page:generate_coupon_step_two.php:title'] = 'Generate coupons';
-$string['page:generate_coupon_step_three.php:title'] = 'Generate coupons';
-$string['page:generate_coupon_step_four.php:title'] = 'Generate coupons';
-$string['page:generate_coupon_step_five.php:title'] = 'Generate coupons';
-$string['page:unused_coupons.php:title'] = 'Unused coupons';
-$string['th:owner'] = 'Owner';
-$string['th:usedby'] = 'Claimed by';
+$string['page:generate_coupon.php:title'] = 'Genera codici';
+$string['page:generate_coupon_step_two.php:title'] = 'Genera codici';
+$string['page:generate_coupon_step_three.php:title'] = 'Genera codici';
+$string['page:generate_coupon_step_four.php:title'] = 'Genera codici';
+$string['page:generate_coupon_step_five.php:title'] = 'Genera codici';
+$string['page:unused_coupons.php:title'] = 'Codici non utilizzati';
+$string['th:owner'] = 'Proprietario';
+$string['th:usedby'] = 'Attivato da';
 $string['th:claimedon'] = 'Claimed on';
 $string['th:senddate'] = 'Send date';
-$string['th:enrolperiod'] = 'Enrolperiod';
-$string['th:submission_code'] = 'Subscription code';
+$string['th:enrolperiod'] = 'Periodo di iscrizione';
+$string['th:submission_code'] = 'Codice di iscrizione';
 $string['th:cohorts'] = 'Cohort';
-$string['th:groups'] = 'Group(s)';
-$string['th:course'] = 'Course';
+$string['th:groups'] = 'Gruppo(i)';
+$string['th:course'] = 'Corso';
 $string['th:issend'] = 'Sent?';
 $string['th:immediately'] = 'Immediately';
 $string['th:for_user_email'] = 'Planned for';
-$string['th:roleid'] = 'Role';
+$string['th:roleid'] = 'Ruolo';
 $string['th:batchid'] = 'Batch';
-$string['th:fullname'] = 'Fullname';
+$string['th:fullname'] = 'Nome';
 
 $string['tab:wzcoupons'] = 'Generate coupon(s)';
 $string['tab:wzcouponimage'] = 'Template image';
@@ -309,7 +311,7 @@ $string['tab:used'] = 'Used coupons';
 $string['task:sendcoupons'] = 'Send scheduled coupons';
 
 // Mails.
-$string['confirm_coupons_sent_subject'] = 'All Coupons have been sent';
+$string['confirm_coupons_sent_subject'] = 'Tutti i coupon sono stati inviati';
 $string['confirm_coupons_sent_body'] = '
 Hello,<br /><br />
 
