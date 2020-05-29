@@ -263,5 +263,20 @@ function xmldb_block_couponext_upgrade($oldversion) {
 
     }
 
+    if ($oldversion < 2020052902) {
+
+        // Define field id to be added to mdl_block_couponext_specific.
+        $table = new xmldb_table('mdl_block_couponext_specific');
+        $field = new xmldb_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null, null);
+
+        // Conditionally launch add field id.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Couponext savepoint reached.
+        upgrade_block_savepoint(true, 2020052902, 'couponext');
+    }
+
     return true;
 }
