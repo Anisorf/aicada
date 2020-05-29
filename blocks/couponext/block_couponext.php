@@ -149,11 +149,11 @@ class block_couponext extends block_base { //F: the class name must start with b
                              <td>" . $this->create_select_course_box($courses) . "</td> 
                         </tr>
                         <tr><td><input type='submit' name='submitbutton' value='"
-                    . get_string('button:submit_coupon_code', 'block_couponext') . "' class='{$btnclass}'></td></tr>
+                . get_string('button:submit_coupon_code', 'block_couponext') . "'></td></tr>
                     </table>
                     <input type='hidden' name='id' value='{$this->instance->id}' />
                     <input type='hidden' name='submitbutton' value='Submit Coupon' />
-                    <input type='hidden' name='_qf__block_coupon_forms_coupon_validator' value='1' />
+                    <input type='hidden' name='_qf__block_couponext_forms_coupon_validator' value='1' />
                     <input type='hidden' name='sesskey' value='" . sesskey() . "' />
                 </form>";
 

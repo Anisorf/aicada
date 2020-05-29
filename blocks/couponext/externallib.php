@@ -819,7 +819,6 @@ class block_coupon_external extends external_api {
      * Builds the coupons and returns the coupon codes.
      *
      * @param int $amount Amount of coupons to be generated.
-     * @param int $courses Array of IDs of the courses the coupons will be generated for.
      * @param array $groups Array of IDs of all groups the users will be added to after using a Coupon.
      * @return array array containing generator instance and generator options.
      * @author Frosina Koceva

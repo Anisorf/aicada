@@ -32,16 +32,19 @@ namespace block_couponext\forms\coupon;
 
 defined('MOODLE_INTERNAL') || die();
 
+//moodleform is defined in formslib.php
 require_once($CFG->libdir . '/formslib.php');
 
 /**
  * block_couponext\forms\coupon\validator
+ * For creating a form in moodle, you have to create class extending moodleform class and override definition for including form elements.
  *
  * @package     block_couponext
  *
  * @copyright   Sebsoft.nl
  * @author      Menno de Ridder <menno@sebsoft.nl>
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
+ * @author      Frosina Koceva <frosina.koceva@gmail.com>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class validator extends \moodleform {
@@ -56,14 +59,15 @@ class validator extends \moodleform {
         $mform->addElement('text', 'coupon_code', get_string('label:coupon_code', 'block_couponext'));
         $mform->addRule('coupon_code', get_string('error:required', 'block_couponext'), 'required', null, 'client');
         $mform->addRule('coupon_code', get_string('error:required', 'block_couponext'), 'required', null, 'server');
+        $mform->setType('coupon_code', PARAM_ALPHANUM);
+        $mform->addHelpButton('coupon_code', 'label:coupon_code', 'block_couponext');
         // F: And the course id to which the user want to enrol.
         $mform->addElement('text', 'course_id', get_string('label:course_id', 'block_couponext'));
         $mform->addRule('course_id', get_string('error:required', 'block_couponext'), 'required', null, 'client');
         $mform->addRule('course_id', get_string('error:required', 'block_couponext'), 'required', null, 'server');
-        $mform->setType('coupon_id', PARAM_INT);
-        $mform->setType('coupon_code', PARAM_ALPHANUM);
-        $mform->addHelpButton('coupon_code', 'label:coupon_code', 'block_couponext');
+        $mform->setType('course_id', PARAM_INT);
         $mform->addHelpButton('course_id', 'label:course_id', 'block_couponext');
+
 
         $this->add_action_buttons(false, get_string('button:submit_coupon_code', 'block_couponext'));
     }

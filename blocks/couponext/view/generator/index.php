@@ -83,6 +83,9 @@ if ($mform->is_cancelled()) {
         case 1:
             $generatoroptions->type = generatoroptions::COHORT;
             break;
+        case 2:
+            $generatoroptions->type = generatoroptions::COURSESPECIFIC;
+            break;
     }
     // Serialize generatoroptions to session.
     $generatoroptions->to_session();
@@ -95,6 +98,10 @@ if ($mform->is_cancelled()) {
         case generatoroptions::COHORT:
             $redirect = new moodle_url($CFG->wwwroot . '/blocks/couponext/view/generator/cohort.php',
                     ['id' => $id]);
+            break;
+        case generatoroptions::COURSESPECIFIC:
+            $redirect = new moodle_url($CFG->wwwroot . '/blocks/couponext/view/generator/coursespecific.php',
+                ['id' => $id]);
             break;
         default:
             // Try autodetect.

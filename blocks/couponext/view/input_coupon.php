@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * validate coupon input
+ * validate couponext input
  *
  * File         input_coupon.php
  * Encoding     UTF-8
@@ -32,6 +32,7 @@ require_once(dirname(__FILE__) . '/../../../config.php');
 use block_couponext\helper;
 use block_couponext\forms\coupon\validator;
 
+// id is the block_instance id
 $id = required_param('id', PARAM_INT);
 
 $instance = $DB->get_record('block_instances', array('id' => $id), '*', MUST_EXIST);
@@ -64,12 +65,13 @@ require_capability('block/couponext:inputcoupons', $context);
 // Include the form.
 try {
     $mform = new validator($url);
-    if ($mform->is_cancelled()) {
+    if ($mform->is_cancelled()) { //Handle form cancel operation, if cancel button is present on form
         redirect(new moodle_url($CFG->wwwroot . '/course/view.php', array('id' => $course->id)));
-    } else if ($data = $mform->get_data()) {
+    }
+    else if ($data = $mform->get_data()) { //In this case you process validated data. $mform->get_data() returns data posted in form.
 
+        // TODO F: its passing also the course id, make it posible to distinguish for different type of coupons (e.g. the course type does not need courseid like the coursespecific type)
         // Get type processor.
-        // F: its passing also the course id, make it posible to distinguish for different type of coupons (e.g. the course type does not need courseid like the coursespecific type)
         $typeproc = block_couponext\coupon\typebase::get_type_instance($data->coupon_code, $data->course_id);
         // Perform assertions.
         $typeproc->assert_not_claimed();
@@ -83,6 +85,7 @@ try {
         else if(!is_null($data->course_id))
             $typeproc->process_claim_coursespecific($USER->id, $data->course_id);
     } else {
+        // this branch is executed if the form is submitted but the data doesn't validate
         echo $OUTPUT->header();
         echo '<div class="block-coupon-container">';
         $mform->display();
@@ -94,4 +97,6 @@ try {
 } catch (\Exception $ex) {
     \core\notification::error(get_string('err:coupon:generic'));
 }
+
+// TODO Redirect to Dashboard /my/index.php, but it could be better to redirect to the course on successful submitting of coupon code + course id
 redirect($CFG->wwwroot . '/my');

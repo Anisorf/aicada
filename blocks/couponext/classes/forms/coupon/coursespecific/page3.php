@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Coupon generator choice form
+ * course specific coupon generator form (step 3)
  *
- * File         chooser.php
+ * File         page3.php
  * Encoding     UTF-8
  *
  * @package     block_couponext
@@ -27,14 +27,17 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace block_couponext\forms\coupon\generator;
+namespace block_couponext\forms\coupon\coursespecific;
 
 defined('MOODLE_INTERNAL') || die();
+
+use block_couponext\helper;
+use block_couponext\coupon\generatoroptions;
 
 require_once($CFG->libdir . '/formslib.php');
 
 /**
- * block_couponext\forms\coupon\generator\chooser
+ * block_couponext\forms\coupon\coursespecific\page3
  *
  * @package     block_couponext
  *
@@ -42,7 +45,21 @@ require_once($CFG->libdir . '/formslib.php');
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class chooser extends \moodleform {
+class page3 extends \moodleform {
+
+    /**
+     * @var generatoroptions
+     */
+    protected $generatoroptions;
+
+    /**
+     * Get reference to database
+     * @return \moodle_database
+     */
+    protected function db() {
+        global $DB;
+        return $DB;
+    }
 
     /**
      * form definition
@@ -50,38 +67,30 @@ class chooser extends \moodleform {
     public function definition() {
         $mform = & $this->_form;
 
-        $mform->addElement('header', 'header', get_string('heading:coupon_type', 'block_couponext'));
-        if (!$strinfo = get_config('block_couponext', 'info_coupon_type')) {
+        list($this->generatoroptions) = $this->_customdata;
+
+        $mform->addElement('header', 'header', get_string('heading:generatormethod', 'block_couponext'));
+        if (!$strinfo = get_config('block_couponext', 'info_coupon_course')) {
             $strinfo = get_string('missing_config_info', 'block_couponext');
         }
         $mform->addElement('static', 'info', '', $strinfo);
 
-        // Type of coupon.
-        // Only create first element with label.
-        $mform->addElement('radio', 'coupon_type[type]', get_string('label:coupon_type', 'block_couponext'),
-                get_string('label:type_course', 'block_couponext'), 0);
-        $mform->addElement('radio', 'coupon_type[type]', '', get_string('label:type_cohorts', 'block_couponext'), 1);
-        $mform->addElement('radio', 'coupon_type[type]', '', get_string('label:type_coursespecific', 'block_couponext'), 2);
-        $mform->setDefault('coupon_type[type]', 0);
-        $mform->addRule('coupon_type[type]', get_string('error:required', 'block_couponext'), 'required', null, 'client');
+        // The ONLY things we shall do here is add how you want to generate.
+        helper::add_generator_method_options($mform);
 
         $this->add_action_buttons(true, get_string('button:next', 'block_couponext'));
     }
 
     /**
-     * Perform validation.
+     * Validate input
      *
-     * @param array $data array of ("fieldname"=>value) of submitted data
-     * @param array $files array of uploaded files "element_name"=>tmp_file_path
-     * @return array of "element_name"=>"error_description" if there are errors,
-     *         or an empty array if everything is OK (true allowed for backwards compatibility too).
+     * @param array $data
+     * @param array $files
+     * @return array
      */
     public function validation($data, $files) {
-        $rs = parent::validation($data, $files);
-        if (!isset($data['coupon_type']['type'])) {
-            $rs['coupon_type[type]'] = get_string('required');
-        }
-        return $rs;
+        $err = parent::validation($data, $files);
+        return $err;
     }
 
 }

@@ -113,6 +113,7 @@ $string['label:coupon_email'] = 'Email address';
 $string['label:coupon_amount'] = 'Amount of coupons';
 $string['label:type_course'] = 'Course enrolment';
 $string['label:type_cohorts'] = 'Enrolment in cohort(s)';
+$string['label:type_coursespecific'] = 'Students choice of a course enrolment';
 $string['label:coupon_connect_course'] = 'Add course(s)';
 $string['label:coupon_connect_course_help'] = 'Select all courses you wish to add to the cohort.
     <br /><b><i>Note: </i></b>All users who are already enrolled in this cohort will also be enrolled in the selected courses!';
@@ -183,6 +184,8 @@ $string['view:generator:course:heading'] = 'Generate course coupon(s)';
 $string['view:generator:course:title'] = 'Generate course coupon(s)';
 $string['view:generator:cohort:heading'] = 'Generate cohort coupon(s)';
 $string['view:generator:cohort:title'] = 'Generate cohort coupon(s)';
+$string['view:generator:coursespecific:heading'] = 'Generate coupon(s) that can be activated on a student course choice';
+$string['view:generator:coursespecific:title'] = 'Generate student course coice coupon(s)';
 $string['view:reports:heading'] = 'Report - Coupon based progress';
 $string['view:reports:title'] = 'Report - Coupon based progress';
 $string['view:reports-used:title'] = 'Report - Used Coupons';

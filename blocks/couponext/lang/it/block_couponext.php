@@ -115,6 +115,7 @@ $string['label:coupon_email'] = 'Indirizzo email';
 $string['label:coupon_amount'] = 'Quantità di codici';
 $string['label:type_course'] = 'Iscrizione al corso';
 $string['label:type_cohorts'] = 'Iscrizione al gruppo globale cohort(s)';
+$string['label:type_coursespecific'] = 'Iscrizione ad un corso scelto dallo studente';
 $string['label:coupon_connect_course'] = 'Aggiungi corso/i';
 $string['label:coupon_connect_course_help'] = 'Seleziona tutti i corsi che desideri aggiungere alla cohort.
     <br /><b><i>Nota: </i></b>Tutti gli utenti che sono già iscritti a questa cohort saranno anche iscritti ai corsi selezionati!';
@@ -127,7 +128,7 @@ $string['label:coupon_role_help'] = 'Select the role with which coupons will be 
 $string['label:coupon_cohorts'] = 'Cohort(s)';
 $string['label:cohort'] = 'Cohort';
 $string['label:coupon_code'] = 'Coupon Code';
-$string['label:course_id'] = 'Course Id';
+$string['label:course_id'] = 'Identificatore del corso';
 $string['label:coupon_code_help'] = 'The coupon code is the unique code which is linked to each individual coupon. You can find this code on your coupon.';
 $string['label:course_id_help'] = 'Il corso che desideri iscrivere e per il quale desideri utilizzare il tuo codice.';
 $string['label:enter_coupon_code'] = 'Inserisci qui il tuo codice';
@@ -176,7 +177,7 @@ $string['label:renderqrcode_help'] = 'Enable or disable this option to include Q
 // Buttons.
 $string['button:next'] = 'Avanti';
 $string['button:save'] = 'Genera Codici';
-$string['button:submit_coupon_code'] = 'Invia Codici';
+$string['button:submit_coupon_code'] = 'Attiva Codice';
 
 // View strings.
 $string['view:generate_coupon:title'] = 'Genera Codici';
@@ -185,6 +186,8 @@ $string['view:generator:course:heading'] = 'Generate course coupon(s)';
 $string['view:generator:course:title'] = 'Generate course coupon(s)';
 $string['view:generator:cohort:heading'] = 'Generate cohort coupon(s)';
 $string['view:generator:cohort:title'] = 'Generate cohort coupon(s)';
+$string['view:generator:coursespecific:heading'] = 'Generare codici attivabili sulla scelta di un corso dallo studente';
+$string['view:generator:coursespecific:title'] = 'Generare cofici attivabili e associabili ad un corso scelto dallo studente';
 $string['view:reports:heading'] = 'Report - Coupon based progress';
 $string['view:reports:title'] = 'Report - Coupon based progress';
 $string['view:reports-used:title'] = 'Report - Used Coupons';
@@ -468,7 +471,7 @@ $string['tab:cleaner'] = 'Cleanup';
 $string['logo:none'] = 'Do not use a logo';
 $string['logo:default'] = 'Default logo';
 $string['url:couponsignup'] = 'Signup with a coupon code';
-$string['url:managelogos'] = 'Manage coupon images';
+$string['url:managelogos'] = 'Gestire l\'immagine del codice';
 $string['select:logo'] = 'Select template logo';
 $string['select:logo:desc'] = 'Select a template logo.<br/>This will only be used when a PDF will be generated for coupons.';
 $string['logomanager:desc'] = 'Use the logomanager below to manage the logos that can be used on the coupon PDFs.<br/>
@@ -577,9 +580,9 @@ $string['userconfig:allowselectenrolperiod'] = 'Allow selection of enrolment per
 $string['userconfig:default'] = 'Default setting';
 $string['userconfig:seperatepdf:default'] = 'Enable generating seperate PDFs by default';
 $string['userconfig:renderqrcode:default'] = 'Enable inclusion of QR code by default';
-$string['tab:requests'] = 'Coupon requests';
-$string['tab:requestusers'] = 'Coupon request users';
-$string['delete:requestuser:header'] = 'Delete coupon request user';
+$string['tab:requests'] = 'Richiesta codici';
+$string['tab:requestusers'] = 'Richiesta di Codice per utenti';
+$string['delete:requestuser:header'] = 'Cancellazione di codice utente';
 $string['delete:requestuser:description'] = 'This will delete ability to request coupons for user <b>{$a->firstname} {$a->lastname}</b>.<br/>
 The process is irreversable, but you can always re-configure this user by re-adding him or her to the allowed users.';
 $string['delete:requestuser:confirmmessage'] = 'Yes, I want to delete this user';

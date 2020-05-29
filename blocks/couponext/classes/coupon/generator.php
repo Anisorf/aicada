@@ -144,6 +144,13 @@ class generator implements icoupongenerator {
     protected function validate_options(generatoroptions $options) {
         switch ($options->type) {
             case generatoroptions::COURSE:
+            case generatoroptions::COURSESPECIFIC:
+                if (empty($options)) {
+                    throw new exception('err:no-coursespecific');
+                }
+                // Validate validate coursespecific.
+                $this->validate_coursespecific($options);
+                break;
             case generatoroptions::ENROLEXTENSION:
                 if (empty($options->courses)) {
                     throw new exception('err:no-courses');
@@ -159,8 +166,6 @@ class generator implements icoupongenerator {
                 // Validate cohorts.
                 $this->validate_cohorts($options->cohorts);
                 break;
-
-            case generatoroptions::COURSESPECIFIC:
 
             default:
                 throw new exception('err:no-courses');
@@ -224,6 +229,22 @@ class generator implements icoupongenerator {
         // Do we have errors?
         if (!empty($errors)) {
             throw new exception('error:validate-cohorts', '', implode('<br/>', $errors));
+        }
+    }
+
+    protected function validate_coursespecific($var) {
+        /*global $DB;
+        // Load courses.
+        $this->cohorts = $DB->get_records_list('cohort', 'id', $cohortids, 'id ASC', 'id, name');
+        $errors = array();
+        foreach ($cohortids as $cohortid) {
+            if (!isset($this->cohorts[$cohortid])) {
+                $errors[] = get_string('error:cohort-not-found', 'block_couponext') . ' (id = ' . $cohortid . ')';
+            }
+        }*/
+        // Do we have errors?
+        if (!empty($errors)) {
+            throw new exception('error:validate-coursespecific', '', implode('<br/>', $errors));
         }
     }
 
@@ -302,6 +323,8 @@ class generator implements icoupongenerator {
                     break;
 
                 case generatoroptions::COURSESPECIFIC:
+                    $result = $this->insert_coupon_coursespecific($objcoupon, $inserterrors);
+                    break;
 
                 default:
                     // Should never happen due to earlier checks.
@@ -426,6 +449,44 @@ class generator implements icoupongenerator {
                 $errors[] = 'Failed to create cohort link ' . $cohort->id . ' record for coupon id ' . $coupon->id . '.';
             }
         }
+        return !empty($errors);
+    }
+
+    /**
+     * Coupon links for courses in the case of coursespecific does not chainge the table of block_couponext_coursespecific on generation
+     *
+     * @param $coupon
+     * @param $errors
+     * @return bool
+     */
+    protected function insert_coupon_coursespecific($coupon, &$errors) {
+        global $DB;
+        $errors = array();
+        // TODO finish insert_coupon_coursespecific and create block_couponext_coursespecific table
+        /*foreach ($this->courses as $course) {
+            // An object for each added course.
+            $record = (object) array(
+                'couponid' => $coupon->id,
+                'courseid' => $course->id
+            );
+            // And insert in db.
+            if (!$DB->insert_record('block_couponext_courses', $record)) {
+                $errors[] = 'Failed to create course link ' . $course->id . ' record for coupon id ' . $coupon->id . '.';
+            }
+        }
+        if (!empty($this->groups)) {
+            foreach ($this->groups as $group) {
+                // An object for each added cohort.
+                $record = (object) array(
+                    'couponid' => $coupon->id,
+                    'groupid' => $group->id
+                );
+                // Andblocks insert in db.
+                if (!$DB->insert_record('block_couponext_groups', $record)) {
+                    $errors[] = 'Failed to create group link ' . $group->id . ' record for coupon id ' . $coupon->id . '.';
+                }
+            }
+        }*/
         return !empty($errors);
     }
 
