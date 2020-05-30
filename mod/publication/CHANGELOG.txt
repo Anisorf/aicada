@@ -1,6 +1,21 @@
 CHANGELOG
 =========
 
+3.8.1 (2020-02-18)
+------------------
+
+* [BUG] #6594 uploaded files are now approved automatically, if specified in the settings
+* [BUG] #6380 pagination now fixed to predefined values (all/10/20/50/100)
+
+
+3.8.0 (2020-01-05)
+------------------
+
+* [BUG] #6492 fixed bug which caused fatal error when opening reports / dates
+* [FEATURE] #4641 table is now sortable by approval selection
+* [FIXED] #6381 Fix typo in receiveteachernotification langstring
+
+
 3.7.1 (2019-10-04)
 ------------------
 

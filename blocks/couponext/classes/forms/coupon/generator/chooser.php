@@ -59,10 +59,10 @@ class chooser extends \moodleform {
         // Type of coupon.
         // Only create first element with label.
         $mform->addElement('radio', 'coupon_type[type]', get_string('label:coupon_type', 'block_couponext'),
-                get_string('label:type_course', 'block_couponext'), 0);
+                get_string('label:type_coursespecific', 'block_couponext'), 2);
+        $mform->addElement('radio', 'coupon_type[type]', '', get_string('label:type_course', 'block_couponext'), 0);
         $mform->addElement('radio', 'coupon_type[type]', '', get_string('label:type_cohorts', 'block_couponext'), 1);
-        $mform->addElement('radio', 'coupon_type[type]', '', get_string('label:type_coursespecific', 'block_couponext'), 2);
-        $mform->setDefault('coupon_type[type]', 0);
+        $mform->setDefault('coupon_type[type]', 2);
         $mform->addRule('coupon_type[type]', get_string('error:required', 'block_couponext'), 'required', null, 'client');
 
         $this->add_action_buttons(true, get_string('button:next', 'block_couponext'));

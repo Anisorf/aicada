@@ -117,6 +117,22 @@ class generator implements icoupongenerator {
     }
 
     /**
+     * Generate a batch of coupons
+     * @param \block_couponext\test\coupon\generatoroptions $options
+     * @return bool
+     */
+    public function import_coursespecific_coupons(generatoroptions $options) {
+        $this->generatorids = array();
+        $this->generatorcodes = array();
+        // First, correct options.
+        $this->fix_options($options);
+        // Validate options.
+        $this->validate_options($options);
+        // And generate.
+        return $this->import_coupon($options);
+    }
+
+    /**
      * Fix generator options
      * @param \block_couponext\test\coupon\generatoroptions $options
      */
@@ -146,10 +162,11 @@ class generator implements icoupongenerator {
             case generatoroptions::COURSE:
             case generatoroptions::COURSESPECIFIC:
                 if (empty($options)) {
+                    // if (empty($options->csvrecipients)) {
                     throw new exception('err:no-coursespecific');
                 }
                 // Validate validate coursespecific.
-                $this->validate_coursespecific($options);
+                $this->validate_coursespecific($options->recipients);
                 break;
             case generatoroptions::ENROLEXTENSION:
                 if (empty($options->courses)) {
@@ -172,8 +189,13 @@ class generator implements icoupongenerator {
                 break; // Never reached.
         }
         // If we have recipients, we should also have an emailbody.
-        if (!empty($options->recipients) && empty($options->emailbody)) {
-            throw new exception('error:no-emailbody');
+        if(!empty($options->recipients)){
+            if ($options->type=='course' && empty($options->courses) && empty($options->emailbody)) {
+                throw new exception('error:no-emailbody');
+            }
+            else if ($options->type=='cohort' && empty($options->cohorts) && empty($options->emailbody)) {
+                throw new exception('error:no-emailbody');
+            }
         }
     }
 
@@ -232,14 +254,24 @@ class generator implements icoupongenerator {
         }
     }
 
-    protected function validate_coursespecific($var) {
-        /*global $DB;
+    protected function validate_coursespecific($importedcoupons) {
+        global $DB;
+        $couponsar = array();
+        for($i=0;$i<count($importedcoupons); $i++){
+            $couponsar[$i] = $importedcoupons[$i]->couponkey;
+        }
         // Load courses.
-        $this->cohorts = $DB->get_records_list('cohort', 'id', $cohortids, 'id ASC', 'id, name');
+        $this->generatorcodes = $DB->get_records_list('block_couponext', 'submission_code', $couponsar, 'id ASC', 'id, submission_code');
+        // $this->cohorts = $DB->get_records_list('cohort', 'id', $cohortids, 'id ASC', 'id, name');
         $errors = array();
-        foreach ($cohortids as $cohortid) {
-            if (!isset($this->cohorts[$cohortid])) {
-                $errors[] = get_string('error:cohort-not-found', 'block_couponext') . ' (id = ' . $cohortid . ')';
+        foreach ($this->generatorcodes as $generatecode) {
+            if (isset($generatecode->submission_code)) {
+                $errors[] = get_string('error:couponcode-is-present', 'block_couponext') . ' (id = ' . $generatecode->submission_code . ')';
+            }
+        }
+        /*foreach ($couponsar as $importcoupon) {
+            if (isset($this->generatorcodes[$importcoupon])) {
+                $errors[] = get_string('error:couponcode-is-presen', 'block_couponext') . ' (id = ' . $importcoupon . ')';
             }
         }*/
         // Do we have errors?
@@ -299,7 +331,6 @@ class generator implements icoupongenerator {
                 // Set email body.
                 $objcoupon->email_body = $this->generate_email($options->emailbody, $objcoupon);
             }
-
             // Insert coupon so we've got an id.
             if (!$objcoupon->id = $DB->insert_record('block_couponext', $objcoupon)) {
                 $errors[] = 'Failed to create general coupon object in database.';
@@ -308,6 +339,108 @@ class generator implements icoupongenerator {
             // Add generated ID.
             $this->generatorids[] = $objcoupon->id;
             $this->generatorcodes[] = $objcoupon->submission_code;
+
+            // Insert extra data depending on generator type.
+            $inserterrors = array();
+            $result = true;
+            switch ($options->type) {
+                case generatoroptions::COURSE:
+                case generatoroptions::ENROLEXTENSION:
+                    $result = $this->insert_coupon_courses($objcoupon, $inserterrors);
+                    break;
+
+                case generatoroptions::COHORT:
+                    $result = $this->insert_coupon_cohorts($objcoupon, $inserterrors);
+                    break;
+
+                case generatoroptions::COURSESPECIFIC:
+                    $result = $this->insert_coupon_coursespecific($objcoupon, $inserterrors);
+                    break;
+
+                default:
+                    // Should never happen due to earlier checks.
+                    $errors[] = "Invalid generator type '{$options->type}'.";
+                    break; // Never reached.
+            }
+            if (!$result) {
+                $errors = array_merge($errors, $inserterrors);
+            }
+        }
+
+        if (!empty($errors)) {
+            throw new exception('error:coupon:generator', '', implode('<br/>', $errors));
+        }
+        return true;
+    }
+
+    /**
+     * Import the coupons
+     *
+     * @param \block_couponext\test\coupon\generatoroptions $options
+     * @return boolean
+     * @throws exception
+     */
+    protected function import_coupon(generatoroptions $options){
+        global $DB;
+        raise_memory_limit(MEMORY_HUGE);
+        $errors = array();
+        $defaultrole = \block_couponext\helper::get_default_coupon_role();
+        $defaultroleid = null;
+        if (isset($defaultrole->id)) {
+            $defaultroleid = $defaultrole->id;
+        }
+        $generatortime = time();
+
+        for ($i = 0; $i < $options->amount; $i++) {
+            // An object for the coupon itself.
+            $objcoupon = new \stdClass();
+            $objcoupon->ownerid = $options->ownerid;
+            if (!empty($options->recipients[$i]->couponkey)) {
+                $couponecode = $options->recipients[$i]->couponkey;
+                $objcoupon->submission_code = clean_param(trim($couponecode), PARAM_TEXT);
+                $this->generatorcodes[] = $objcoupon->submission_code;
+            }
+            else {
+                $objcoupon->submission_code = codegenerator::generate_unique_code($options->codesize);
+            }
+
+            $objcoupon->timecreated = $generatortime;
+            $objcoupon->timeexpired = null;
+            $objcoupon->email_body = null;
+            $objcoupon->userid = null;
+            $objcoupon->issend = 0;
+            $objcoupon->senddate = (!empty($options->senddate)) ? $options->senddate : null;
+            $objcoupon->enrolperiod = (int)$options->enrolperiod;
+            $objcoupon->redirect_url = (!empty($options->redirecturl)) ? $options->redirecturl : null;
+            $objcoupon->logoid = (int)$options->logoid;
+            $objcoupon->typ = $options->type;
+            $objcoupon->claimed = 0;
+            $objcoupon->renderqrcode = ($options->renderqrcode) ? 1 : 0;
+            $objcoupon->roleid = (!empty($options->roleid)) ? $options->roleid : $defaultroleid;
+            if (!empty($options->extendusers[$i])) {
+                $objcoupon->userid = $options->extendusers[$i];
+            }
+            // Add batch id.
+            $objcoupon->batchid = $options->batchid;
+
+            // If coupons are personal, set recipient data.
+            if (!empty($options->recipients['email'])) {
+                $recipient = $options->recipients[$i];
+                $objcoupon->for_user_email = clean_param(trim($recipient->email), PARAM_EMAIL);
+                $objcoupon->for_user_name = clean_param(trim($recipient->name), PARAM_TEXT);
+                $objcoupon->for_user_gender = clean_param(trim($recipient->gender), PARAM_TEXT);
+                // Set email body.
+                $objcoupon->email_body = $this->generate_email($options->emailbody, $objcoupon);
+                $this->generatorcodes[] = $objcoupon->submission_code;
+            }
+            // Insert coupon so we've got an id.
+            if (!$objcoupon->id = $DB->insert_record('block_couponext', $objcoupon)) {
+                $errors[] = 'Failed to create general coupon object in database.';
+                continue;
+            }
+            // Add generated ID.
+            $this->generatorids[] = $objcoupon->id;
+
 
             // Insert extra data depending on generator type.
             $inserterrors = array();

@@ -246,13 +246,15 @@ $string['report:timeexpired'] = 'Expires';
 $string['str:mandatory'] = 'Mandatory';
 $string['str:optional'] = 'Optional';
 
-$string['download-sample-csv'] = 'Download sample CSV file';
+$string['download-sample-csv'] = 'Scarica il formato di esempio per il file CSV';
 $string['pdf:titlename'] = 'Moodle Coupon';
 $string['pdf-meta:title'] = 'Moodle Coupon';
 $string['pdf-meta:subject'] = 'Moodle Coupon';
 $string['pdf-meta:keywords'] = 'Moodle Coupon';
 $string['error:sessions-expired'] = 'Your session has been expired. Please try again.';
 $string['label:coupon_recipients'] = 'Recipients';
+$string['label:coupon'] = 'Codici';
+$string['label:coupon_help'] = 'With this field you can upload a csv file with coupons.';
 $string['error:recipients-extension'] = 'You can only upload .csv files.';
 $string['error:coupon_amount-recipients-both-set'] = 'Please specify a number of coupons to generate OR a csv list of recipients.';
 $string['label:coupon_recipients_help'] = 'With this field you can upload a csv file with users.';
@@ -268,19 +270,18 @@ $string['label:enrolment_period_help'] = 'Period (in days) the user will be enro
 $string['label:date_send_coupons'] = 'Send date';
 $string['label:date_send_coupons_help'] = 'Date the coupons will be send to the recipient(s).';
 $string['label:showform'] = 'Generator options';
-$string['showform-csv'] = 'I want to create coupons using a CSV with recipients';
-$string['showform-manual'] = 'I want to manually configure the recipients';
-$string['showform-amount'] = 'I want to create an arbitrary amount of coupons';
+$string['showform-csv-coursespecific'] = 'Voglio importare codici usando un CSV senza destinatari';
+$string['showform-csv'] = 'Voglio generare coupon usando un CSV con i destinatari';
+$string['showform-manual'] = 'Voglio configurare manualmente i destinatari';
+$string['showform-amount'] = 'Voglio generare una quantità arbitraria di coupon';
 $string['error:recipients-max-exceeded'] = 'Your csv file has exceeded the maximum of 10.000 coupon users. Please limit it.';
 $string['error:recipients-columns-missing'] = 'The file could not be validated. Are you sure you entered the right columns and seperator?<br/>
 The following columns <i>must</i> be present in the first row with the name exactly as given: {$a}';
 $string['error:recipients-invalid'] = 'The file could not be validated. Are you sure you entered the right columns and seperator?';
 $string['error:recipients-empty'] = 'Please enter at least one user.';
 $string['error:recipients-email-invalid'] = 'The email address {$a->email} is invalid. Please fix it in the csv file.';
-$string['coupon_recipients_desc'] = 'The following columns are required to be present in the uploaded CSV, regardless of order: E-mail, Gender, Name.<br/>
-For every given person in the CSV, a coupon is generated and emailed to the user.<br/>
-Please take note these coupons will be created a-synchronous by a background task; <i>not</i> instantly.
-This is because the process of generating coupons may be quite lengthy, especially for a large amount of users.';
+$string['error:couponcode-is-present']='Il codice che si sta importando è già presente, usa codici univoci';
+$string['coupon_recipients_desc'] = 'La colonna code deve essere presente nel file CSV e deve contenere i codici che si vogliano caricare.';
 $string['report:download-excel'] = 'Download unused coupons';
 
 $string['page:generate_coupon.php:title'] = 'Genera codici';
@@ -383,6 +384,38 @@ With kind regards,<br /><br />
 ##site_name##';
 
 $string['coupon_mail_csv_content_cohorts'] = '
+Dear ##to_gender## ##to_name##,<br /><br />
+
+You have recently been enrolled for our training **PLEASE FILL IN MANUALLY**.
+During the course you have access to our Online Learning Environment: ##site_name##.<br /><br />
+
+In this environment, apart from the course materials, you will have the possibility to network with fellow students.
+The course will start with a number of preparation assignments, we kindly request to take a look at them
+at the latest 3 (work)days before the course starts.
+Both you and the teacher can then decently prepare for the course.<br /><br />
+
+All course materials will be accessible for you, at the very latest 4 days before the course starts.
+It can always happen that the teacher requests extra materials to be added at a later time, for example
+after a physical session. If this happens, you will be abe to see this in the learning environment
+During meetings you will not receive any printed lesson materials, we advise you to bring a laptop and/or tablet.<br /><br />
+
+The coupon code you require to enrol is: ##submission_code##<br/><br/>
+
+This coupon is personal and unique, and gives access to the appropriate courses for your education.
+Please read the instructions on the coupon carefully.<br /><br />
+
+If you have any questions regarding creating an account or find any other problems, you can contact the helpdesk.
+Information can be found on our Learning Environment.
+When nobody is available to answer your question, please leave your name, e-mailaddress and phonenumber behind and we will get back to you as
+soon as possible.<br /><br />
+
+We wish you good luck on the course.<br /><br />
+
+With kind regards,<br /><br />
+
+##site_name##';
+
+$string['coupon_mail_csv_content_coursespecific'] = '
 Dear ##to_gender## ##to_name##,<br /><br />
 
 You have recently been enrolled for our training **PLEASE FILL IN MANUALLY**.
@@ -568,7 +601,7 @@ $string['findusers:placeholder'] = '... select user ...';
 $string['findcourses:noselectionstring'] = 'no course(s) selected yet';
 $string['findcourses:placeholder'] = '... select course(s) ...';
 $string['coupon:user:heading'] = 'User configuration for {$a->firstname} {$a->lastname}';
-$string['coupon:user:info'] = 'Use the form below to configure the options and accessible courses this use can request coupons for';
+$string['coupon:user:info'] = 'Inserisci il tuo codice e scegli il corso a quale vuoi iscriverti';
 $string['knowncourses'] = 'Known courses';
 $string['removecourse'] = 'Remove course \'{$a}\' from options';
 $string['othersettings'] = 'Other settings / options';

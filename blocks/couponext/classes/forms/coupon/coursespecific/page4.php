@@ -86,6 +86,9 @@ class page4 extends \moodleform {
             case 'csv':
                 helper::add_csv_generator_elements($mform, $this->generatoroptions->type);
                 break;
+            case 'csv-coursespecific':
+                helper::add_csv_coursespecific_generator_elements($mform, $this->generatoroptions->type);
+                break;
         }
 
         // Settings that apply for both csv and amount.
@@ -121,7 +124,14 @@ class page4 extends \moodleform {
                 'email_body' => $data['email_body'],
                 'date_send_coupons' => $data['date_send_coupons']
             );
-        } else if ($this->generatoroptions->generatormethod == 'manual') {
+        }
+        else if ($this->generatoroptions->generatormethod == 'csv-coursespecific') {
+            // TODO validate also the codes
+            $data2validate = array(
+                'date_send_coupons' => $data['date_send_coupons']
+            );
+        }
+        else if ($this->generatoroptions->generatormethod == 'manual') {
             $data2validate = array(
                 'email_body' => $data['email_body_manual'],
                 'date_send_coupons' => $data['date_send_coupons_manual']
@@ -156,7 +166,13 @@ class page4 extends \moodleform {
             if (!$csvcontent || empty($csvcontent)) {
                 $errors['coupon_recipients'] = get_string('required');
             }
-        } else {
+        } else if ($this->generatoroptions->generatormethod == 'csv-coursespecific') {
+            $csvcontent = $this->get_file_content('coupon');
+            if (!$csvcontent || empty($csvcontent)) {
+                $errors['coupon'] = get_string('required');
+            }
+        }
+        else {
             // Force comma as separator since we defined manual entry this way.
             $validationresult = helper::validate_coupon_recipients($data['coupon_recipients_manual'], ',');
             if ($validationresult !== true) {

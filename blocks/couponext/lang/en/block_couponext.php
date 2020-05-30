@@ -251,6 +251,8 @@ $string['pdf-meta:subject'] = 'Moodle Coupon';
 $string['pdf-meta:keywords'] = 'Moodle Coupon';
 $string['error:sessions-expired'] = 'Your session has been expired. Please try again.';
 $string['label:coupon_recipients'] = 'Recipients';
+$string['label:coupon'] = 'Coupons';
+$string['label:coupon_help'] = 'With this field you can upload a csv file with coupons.';
 $string['error:recipients-extension'] = 'You can only upload .csv files.';
 $string['error:coupon_amount-recipients-both-set'] = 'Please specify a number of coupons to generate OR a csv list of recipients.';
 $string['label:coupon_recipients_help'] = 'With this field you can upload a csv file with users.';
@@ -266,6 +268,7 @@ $string['label:enrolment_period_help'] = 'Period (in days) the user will be enro
 $string['label:date_send_coupons'] = 'Send date';
 $string['label:date_send_coupons_help'] = 'Date the coupons will be send to the recipient(s).';
 $string['label:showform'] = 'Generator options';
+$string['showform-csv-coursespecific'] = 'I want to import coupons using a CSV without recipent(s)';
 $string['showform-csv'] = 'I want to create coupons using a CSV with recipients';
 $string['showform-manual'] = 'I want to manually configure the recipients';
 $string['showform-amount'] = 'I want to create an arbitrary amount of coupons';
@@ -381,6 +384,38 @@ With kind regards,<br /><br />
 ##site_name##';
 
 $string['coupon_mail_csv_content_cohorts'] = '
+Dear ##to_gender## ##to_name##,<br /><br />
+
+You have recently been enrolled for our training **PLEASE FILL IN MANUALLY**.
+During the course you have access to our Online Learning Environment: ##site_name##.<br /><br />
+
+In this environment, apart from the course materials, you will have the possibility to network with fellow students.
+The course will start with a number of preparation assignments, we kindly request to take a look at them
+at the latest 3 (work)days before the course starts.
+Both you and the teacher can then decently prepare for the course.<br /><br />
+
+All course materials will be accessible for you, at the very latest 4 days before the course starts.
+It can always happen that the teacher requests extra materials to be added at a later time, for example
+after a physical session. If this happens, you will be abe to see this in the learning environment
+During meetings you will not receive any printed lesson materials, we advise you to bring a laptop and/or tablet.<br /><br />
+
+The coupon code you require to enrol is: ##submission_code##<br/><br/>
+
+This coupon is personal and unique, and gives access to the appropriate courses for your education.
+Please read the instructions on the coupon carefully.<br /><br />
+
+If you have any questions regarding creating an account or find any other problems, you can contact the helpdesk.
+Information can be found on our Learning Environment.
+When nobody is available to answer your question, please leave your name, e-mailaddress and phonenumber behind and we will get back to you as
+soon as possible.<br /><br />
+
+We wish you good luck on the course.<br /><br />
+
+With kind regards,<br /><br />
+
+##site_name##';
+
+$string['coupon_mail_csv_content_coursespecific'] = '
 Dear ##to_gender## ##to_name##,<br /><br />
 
 You have recently been enrolled for our training **PLEASE FILL IN MANUALLY**.

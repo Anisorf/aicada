@@ -562,6 +562,70 @@ class helper {
     }
 
     /**
+     * Load coupons from a CSV string
+     * @param string $recipientsstr
+     * @param string $delimiter
+     * @return boolean|\stdClass
+     */
+    public static final function get_coupons_from_csv($recipientsstr) {
+
+        $recipients = array();
+        $count = 0;
+
+        // Split up in rows.
+        // $expectedcolumns = array('e-mail', 'gender', 'name');
+        $expectedcolumns = array('code');
+        /*$recipientsstr = str_replace("\r", '', $recipientsstr);
+        if (!$csvdata = str_getcsv($recipientsstr, "\n")) {
+            return false;
+        }*/
+        // Split up in columns.
+        $csvdata = str_getcsv($recipientsstr, "\n");
+        foreach ($csvdata as &$row) {
+
+            // Get the next row.
+            $row = str_getcsv($row);
+
+            // Check if we're looking at the first row.
+            if ($count == 0) {
+
+                $expectedrow = array();
+                // Set the columns we'll need.
+                foreach ($row as $key => &$column) {
+
+                    $column = trim(strtolower($column));
+                    if (!in_array($column, $expectedcolumns)) {
+                        continue;
+                    }
+
+                    $expectedrow[$key] = $column;
+                }
+                // If we're missing columns.
+                if (count($expectedcolumns) != count($expectedrow)) {
+                    return false;
+                }
+
+                // Now set which columns we'll need to use when extracting the information.
+                $couponkey = array_search('code', $expectedrow);
+                # $emailkey = array_search('e-mail', $expectedrow);
+                # $genderkey = array_search('gender', $expectedrow);
+
+                $count++;
+                continue;
+            }
+
+            $recipient = new \stdClass();
+            $recipient->couponkey = trim($row[$couponkey]);
+            // $recipient->email = trim($row[$emailkey]);
+            // $recipient->gender = trim($row[$genderkey]);
+
+            $recipients[] = $recipient;
+        }
+
+        return $recipients;
+    }
+
+    /**
      * Validate given recipients
      * @param array $csvdata
      * @param string $delimiter
@@ -588,6 +652,41 @@ class helper {
                     if (!filter_var($recipient->email, FILTER_VALIDATE_EMAIL)) {
                         $error = get_string('error:recipients-email-invalid', 'block_couponext', $recipient);
                     }
+                }
+            }
+        }
+
+        return ($error === false) ? true : $error;
+    }
+
+    /**
+     * Validate given coupons
+     * @param array $csvdata
+     * @param string $delimiter
+     * @return array|true true if valid, array or error messages if invalid
+     */
+    public static final function validate_coupon($csvdata) {
+
+        $error = false;
+        $maxcoupons = get_config('block_couponext', 'max_coupons');
+
+        if (!$recipients = self::get_coupons_from_csv($csvdata)) {
+            // Required columns aren't found in the csv.
+            $error = get_string('error:recipients-columns-missing', 'block_couponext', 'e-mail,gender,name');
+        } else {
+            // No recipient rows were added to the csv.
+            if (empty($recipients)) {
+                $error = get_string('error:recipients-empty', 'block_couponext');
+                // Check max of the file.
+            } else if (count($recipients) > $maxcoupons) {
+                $error = get_string('error:recipients-max-exceeded', 'block_couponext');
+            } else {
+                // Lets run through the file to check on coupons.
+                foreach ($recipients as $recipient) {
+                    // TODO code check if its valid
+                    /*if (!filter_var($recipient->email, FILTER_VALIDATE_EMAIL)) {
+                        $error = get_string('error:recipients-email-invalid', 'block_couponext', $recipient);
+                    }*/
                 }
             }
         }
@@ -843,14 +942,18 @@ class helper {
     public static function add_generator_method_options($mform) {
         // Determine which type of settings we'll use.
         $radioarray = array();
+
+        $radioarray[] = & $mform->createElement('radio', 'showform', '',
+            get_string('showform-csv-coursespecific', 'block_couponext'), 'csv-coursespecific', array('onchange' => 'showHide(this.value)'));
         $radioarray[] = & $mform->createElement('radio', 'showform', '',
                 get_string('showform-amount', 'block_couponext'), 'amount', array('onchange' => 'showHide(this.value)'));
+
         $radioarray[] = & $mform->createElement('radio', 'showform', '',
                 get_string('showform-csv', 'block_couponext'), 'csv', array('onchange' => 'showHide(this.value)'));
         $radioarray[] = & $mform->createElement('radio', 'showform', '',
                 get_string('showform-manual', 'block_couponext'), 'manual', array('onchange' => 'showHide(this.value)'));
         $mform->addGroup($radioarray, 'radioar', get_string('label:showform', 'block_couponext'), array('<br/>'), false);
-        $mform->setDefault('showform', 'amount');
+        $mform->setDefault('showform', 'csv-coursespecific');
     }
 
     /**
@@ -946,6 +1049,49 @@ class helper {
         $mform->setDefault('email_body', array('text' => $mailcontentdefault));
         $mform->addRule('email_body', get_string('required'), 'required');
         $mform->addHelpButton('email_body', 'label:email_body', 'block_couponext');
+
+        // Configurable enrolment time.
+        $mform->addElement('date_selector', 'date_send_coupons', get_string('label:date_send_coupons', 'block_couponext'));
+        $mform->addRule('date_send_coupons', get_string('required'), 'required');
+        $mform->addHelpButton('date_send_coupons', 'label:date_send_coupons', 'block_couponext');
+    }
+
+    /**
+     * Add element to Moodle form for "csv-coursespecific" settings
+     *
+     * @param \MoodleQuickForm $mform
+     * @param string $type coupon type
+     */
+    public static function add_csv_coursespecific_generator_elements($mform, $type) {
+        global $CFG;
+        $mailcontentdefault = get_string('coupon_mail_csv_content_coursespecific', 'block_couponext');
+
+        // Send coupons based on CSV upload.
+        $mform->addElement('header', 'csvForm', get_string('heading:csvForm', 'block_couponext'));
+
+        // Filepicker.
+        $urldownloadcsv = new \moodle_url($CFG->wwwroot . '/blocks/couponext/couponspecific_sample.csv');
+        $mform->addElement('filepicker', 'coupon',
+            get_string('label:coupon', 'block_couponext'), null, array('accepted_types' => 'csv'));
+        $mform->addHelpButton('coupon', 'label:coupon', 'block_couponext');
+        $mform->addElement('static', 'coupon_recipients_desc', '', get_string('coupon_recipients_desc', 'block_couponext'));
+        $mform->addElement('static', 'couponspecific_sample_csv', '', '<a href="' . $urldownloadcsv
+            . '" target="_blank">' . get_string('download-sample-csv', 'block_couponext') . '</a>');
+
+/*      $choices = self::get_delimiter_list();
+        $mform->addElement('select', 'csvdelimiter', get_string('csvdelimiter', 'tool_uploaduser'), $choices);
+        if (get_string('listsep', 'langconfig') == ';') {
+            $mform->setDefault('csvdelimiter', 'semicolon');
+        } else {
+            $mform->setDefault('csvdelimiter', 'comma');
+        }*/
+
+        // Editable email message.
+/*      $mform->addElement('editor', 'email_body', get_string('label:email_body', 'block_couponext'), array('noclean' => 1));
+        $mform->setType('email_body', PARAM_RAW);
+        $mform->setDefault('email_body', array('text' => $mailcontentdefault));
+        $mform->addRule('email_body', get_string('required'), 'required');
+        $mform->addHelpButton('email_body', 'label:email_body', 'block_couponext');*/
 
         // Configurable enrolment time.
         $mform->addElement('date_selector', 'date_send_coupons', get_string('label:date_send_coupons', 'block_couponext'));

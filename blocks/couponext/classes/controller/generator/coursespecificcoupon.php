@@ -214,6 +214,19 @@ class coursespecificcoupon
             $generatoroptions->redirecturl = (empty($data->redirect_url)) ? null : $data->redirect_url;
             $generatoroptions->renderqrcode = (isset($data->renderqrcode) && $data->renderqrcode) ? true : false;
 
+            if ($generatoroptions->generatormethod == 'csv-coursespecific') {
+                # $generatoroptions->csvdelimitername = $data->csvdelimiter;
+                $generatoroptions->senddate = $data->date_send_coupons;
+                $generatoroptions->csvrecipients = $mform->get_file_content('coupon');
+                # $generatoroptions->emailbody = $data->email_body['text'];
+
+                // Serialize generatoroptions to session.
+                $generatoroptions->to_session();
+
+                // To the extra step.
+                $redirect = $this->get_url(['page' => 5]);
+                redirect($redirect);
+            }
             if ($generatoroptions->generatormethod == 'csv') {
                 $generatoroptions->csvdelimitername = $data->csvdelimiter;
                 $generatoroptions->senddate = $data->date_send_coupons;
@@ -318,12 +331,13 @@ class coursespecificcoupon
             redirect(new moodle_url($CFG->wwwroot . '/course/view.php', array('id' => $this->page->course->id)));
         } else if ($data = $mform->get_data()) {
             // Get recipients.
-            $delimiter = helper::get_delimiter($generatoroptions->csvdelimitername);
-            $generatoroptions->recipients = helper::get_recipients_from_csv($data->coupon_recipients, $delimiter);
+           # $delimiter = helper::get_delimiter($generatoroptions->csvdelimitername);
+            // $generatoroptions->recipients = helper::get_recipients_from_csv($data->coupon_recipients, $delimiter);
+            $generatoroptions->recipients = helper::get_coupons_from_csv($data->coupon_recipients);
 
             // Now that we've got all information we'll create the coupon objects.
             $generator = new generator();
-            $result = $generator->generate_coupons($generatoroptions);
+            $result = $generator->import_coursespecific_coupons($generatoroptions);
 
             if ($result !== true) {
                 // Means we've got an error.

@@ -234,6 +234,7 @@ $string['label:enrolment_period_help'] = 'Période (en jours) l\'utilisateur ser
 $string['label:date_send_coupons'] = 'Date d\'envoi';
 $string['label:date_send_coupons_help'] = 'Date à laquelle les coupons seront envoyés au destinataire(s).';
 $string['label:showform'] = 'Options générateur';
+$string['showform-csv-coursespecific'] = 'I want to import coupons using a CSV without recipent(s)';
 $string['showform-csv'] = 'Je souhaite créer des coupons à l\'aide d\'un fichier CSV avec destinataires';
 $string['showform-manual'] = 'Je souhaite configurer manuellement les destinataires';
 $string['showform-amount'] = 'Je veux créer une quantité arbitraire de coupons';
@@ -341,6 +342,35 @@ Cordialement,<br /><br />
 ##site_name##';
 
 $string['coupon_mail_csv_content_cohorts'] = '
+Cher ##to_gender## ##to_name##,<br /><br />
+
+Vous venez d\'être inscrit à notre formation**PLEASE FILL IN MANUALLY**.
+Pendant le cours, vous aurez accès à notre environnement d\'apprentissage en ligne: ##site_name##.<br /><br />
+
+Dans cet environnement, en dehors du matériel de cours, vous aurez la possibilité de réseauter avec d\'autres étudiants.
+Le cours débutera avec un certain nombre de travaux de préparation, nous vous prions de leurs jeter un coup d\'oeil
+au plus tard 3 jours avant le début du cours.
+Vous et l\'enseignant pouvez alors vous préparer décemment pour le cours.<br /><br />
+
+Tous les documents du cours seront accessibles pour vous, au plus tard 4 jours avant le début du cours.
+Il peut toujours arriver que l\'enseignant demande des travaux supplémentaires à ajouter ultérieurement, par exemple
+après une séance physique. Si cela se produit, vous pourrez le voir dans l\'environnement d\'apprentissage
+Pendant les réunions, vous ne recevrez aucun matériel de leçon imprimé, nous vous conseillons d\'apporter un ordinateur portable et / ou une tablette.<br /><br />
+
+Vous trouverez le coupon pour entrer dans le cours ci-joint. Ce coupon est personnel et unique, et donne accès aux cours appropriés pour votre éducation.
+Veuillez lire attentivement les instructions sur le coupon.<br /><br />
+
+Si vous avez des questions concernant la création d\'un compte ou si vous rencontrez d\'autres problèmes, vous pouvez contacter le helpdesk.
+Vous trouverez de l\information sur l\'environnement d\'apprentissage.
+Lorsque personne n\'est disponible pour répondre à votre question, veuillez laisser votre nom, adresse e-mail et numéro de téléphone derrière et nous vous répondrons dès que possible.<br /><br />
+
+Nous vous souhaitons bonne chance dans votre formation.<br /><br />
+
+Cordialement,<br /><br />
+
+##site_name##';
+
+$string['coupon_mail_csv_content_coursespecific'] = '
 Cher ##to_gender## ##to_name##,<br /><br />
 
 Vous venez d\'être inscrit à notre formation**PLEASE FILL IN MANUALLY**.

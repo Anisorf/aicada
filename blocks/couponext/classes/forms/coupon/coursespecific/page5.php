@@ -90,13 +90,16 @@ class page5 extends \moodleform {
     public function validation($data, $files) {
         $errors = parent::validation($data, $files);
         $delimiter = helper::get_delimiter($this->generatoroptions->csvdelimitername);
-        $recipientserror = helper::validate_coupon_recipients($data['coupon_recipients'], $delimiter);
+        if(strpos( $data['coupon_recipients'],"code")===0){
+            $recipientserror = helper::validate_coupon($data['coupon_recipients']);
+        }
+        else
+            $recipientserror = helper::validate_coupon_recipients($data['coupon_recipients'], $delimiter);
         if ($recipientserror !== true) {
-            $errors['coupon_recipients'] = $recipientserror;
+            $errors['coupon'] = $recipientserror;
         }
         return $errors;
     }
-
     /**
      * Use this method to a cancel and submit button to the end of your form. Pass a param of false
      * if you don't want a cancel button in your form. If you have a cancel button make sure you

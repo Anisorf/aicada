@@ -140,10 +140,10 @@ class block_couponext extends block_base { //F: the class name must start with b
             $attributes = array('size' => min(20, count($arrcoursesselect)));
 
             $couponform = "
-                <form action='$urlinputcoupon' method='post'>
+                <form action='$urlinputcoupon' method='post' class='form-group'>
                     <table>
                         <tr><td>" . get_string('label:enter_coupon_code', 'block_couponext') . ":</td></tr>
-                        <tr><td><input type='text' name='coupon_code' placeholder='Inserisci codice' required></td></tr>
+                        <tr><td><input type='text' name='coupon_code' placeholder='Inserisci codice' class='form-control' required></td></tr>
                         
                         <tr> <!-- F: the select box for selecting a course to which to enrol! -->
                              <td>" . $this->create_select_course_box($courses) . "</td> 
@@ -271,7 +271,7 @@ class block_couponext extends block_base { //F: the class name must start with b
      * @return string
      */
     public function create_select_course_box($courses){
-        $out = '<select name="course_id">';
+        $out = '<select name="course_id" class="form-control">';
         $out .= '<option value="null">--Seleziona Corso</option>';
         foreach ($courses as $course){
             // $out .= '<option>' . $course->fullname . '</option>';

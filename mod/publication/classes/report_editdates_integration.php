@@ -92,13 +92,13 @@ extends report_editdates_mod_date_extractor {
      * @throws dml_exception
      */
     public function save_dates(cm_info $cm, array $dates) {
-        global $DB, $COURSE;
+        global $DB;
 
         $update = new stdClass();
         $update->id = $cm->instance;
         $update->duedate = $dates['duedate'];
         $update->allowsubmissionsfromdate = $dates['allowsubmissionsfromdate'];
 
-        $result = $DB->update_record('publication', $update);
+        $DB->update_record('publication', $update);
     }
 }

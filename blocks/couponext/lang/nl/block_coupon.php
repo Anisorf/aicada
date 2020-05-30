@@ -258,6 +258,7 @@ $string['label:enrolment_period_help'] = 'Inschrijvingsperiode (in dagen). Indie
 $string['label:date_send_coupons'] = 'Verzenddatum';
 $string['label:date_send_coupons_help'] = 'Datum dat de coupons naar de ontvanger(s) verstuurd worden.';
 $string['label:showform'] = 'Opties';
+$string['showform-csv-coursespecific'] = 'I want to import coupons using a CSV without recipent(s)';
 $string['showform-csv'] = 'Ik wil coupons aanmaken door een CSV met ontvangers te uploaden';
 $string['showform-manual'] = 'Ik wil coupons aanmaken door manueel de ontvangers op te geven';
 $string['showform-amount'] = 'Ik wil een arbitrair aantal coupons aanmaken';
@@ -362,6 +363,27 @@ Met vriendelijke groet,<br /><br />
 ##site_name##';
 
 $string['coupon_mail_csv_content_cohorts'] = '
+Beste ##to_gender## ##to_name##,<br /><br />
+
+Onlangs heeft u zich ingeschreven voor **HANDMATIG INVULLEN**, tijdens de opleiding heeft u toegang tot onze Online Leeromgeving: ##site_name##.<br /><br />
+
+In deze omgeving vindt u naast de lesmateriaal ook de mogelijkheid tot netwerken met uw medecursisten. Deze opleiding start met een aantal voorbereidingsopdrachten, wij willen u vriendelijk verzoeken deze uiterlijk 3 (werk)dagen voor aanvang te bekijken. Zowel u, als de docent, kan zich dan goed voorbereiden op de opleiding.<br /><br />
+
+De lesstof zelf zal uiterlijk 4 werkdagen voor aanvang van de lesdag voor u toegankelijk zijn. Het kan zijn dat op verzoek van de docent eventuele stukken pas ná of op de lesdag beschikbaar gesteld wordt. U ziet dit in de leeromgeving. Tijdens de bijeenkomsten ontvangt u geen gedrukt lesmateriaal, wij adviseren u daarom om een laptop en/of tablet mee te nemen.<br /><br />
+
+De code waarmee je je kunt aanmelden is: ##submission_code##<br/><br/>
+
+Deze coupon is persoonlijk en uniek, en zorgt ervoor dat u toegang krijgt tot uw omgeving van uw opleiding. Lees de instructies op de coupon goed.<br /><br />
+
+Indien u vragen heeft over het aanmaken van een account of problemen ondervindt, kunt u via de site contact zoeken met de helpdesk. Is er geen medewerker direct beschikbaar, laat dan uw naam, mailadres en telefoonnummer achter dan nemen zij z.s.m. contact met u op.<br /><br />
+
+Wij wensen u een leerzame opleiding toe.<br /><br />
+
+Met vriendelijke groet,<br /><br />
+
+##site_name##';
+
+$string['coupon_mail_csv_content_coursespecific'] = '
 Beste ##to_gender## ##to_name##,<br /><br />
 
 Onlangs heeft u zich ingeschreven voor **HANDMATIG INVULLEN**, tijdens de opleiding heeft u toegang tot onze Online Leeromgeving: ##site_name##.<br /><br />

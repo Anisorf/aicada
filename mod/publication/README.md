@@ -32,7 +32,7 @@ individual students to release documents.
 Requirements
 ------------
 
-The plugin is available for Moodle 2.7+. This version is for Moodle 3.7.
+The plugin is available for Moodle 2.7+. This version is for Moodle 3.8.
 
 
 Installation
@@ -64,7 +64,7 @@ Documentation
 -------------
 
 You can find a cheat sheet for the plugin on the [AMC
-website](http://www.academic-moodle-cooperation.org/en/modules/studentfolder/) and a video tutorial
+website](https://www.academic-moodle-cooperation.org/en/module/studentfolder/) and a video tutorial
 in german only in the [AMC YouTube Channel](https://www.youtube.com/c/AMCAcademicMoodleCooperation).
 
 

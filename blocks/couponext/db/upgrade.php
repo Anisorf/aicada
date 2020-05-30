@@ -263,6 +263,7 @@ function xmldb_block_couponext_upgrade($oldversion) {
 
     }
 
+/*
     if ($oldversion < 2020052902) {
 
         // Define field id to be added to mdl_block_couponext_specific.
@@ -277,6 +278,7 @@ function xmldb_block_couponext_upgrade($oldversion) {
         // Couponext savepoint reached.
         upgrade_block_savepoint(true, 2020052902, 'couponext');
     }
+*/
 
     return true;
 }

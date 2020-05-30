@@ -121,7 +121,8 @@
         <INDEX NAME="userid" UNIQUE="false" FIELDS="userid"/>
       </INDEXES>
     </TABLE>
-    <TABLE NAME="mdl_block_couponext_specific" COMMENT="Default comment for the table, please edit me">
+    <!--
+    <TABLE NAME="block_couponext_specific" COMMENT="Default comment for the table, please edit me">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="couponid" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="false"/>
@@ -130,6 +131,11 @@
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
-    </TABLE>
+      <INDEXES>
+        <INDEX NAME="couponid" UNIQUE="false" FIELDS="couponid"/>
+        <INDEX NAME="courseid" UNIQUE="false" FIELDS="courseid"/>
+      </INDEXES>
+    </TABLE> 
+    -->
   </TABLES>
 </XMLDB>
