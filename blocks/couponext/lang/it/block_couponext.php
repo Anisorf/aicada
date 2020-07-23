@@ -45,7 +45,7 @@ Questo plugin è stato scritto da Sebsoft Managed Hosting & Software Development
 {$a}<br /><br />';
 
 // DEFAULT.
-$string['blockname'] = 'Coupon Ext';
+$string['blockname'] = 'Accedi ai Percorsi di autoistruzione';
 $string['pluginname'] = 'Coupon Extended';
 
 // Headers.
@@ -131,7 +131,7 @@ $string['label:coupon_code'] = 'Coupon Code';
 $string['label:course_id'] = 'Identificatore del corso';
 $string['label:coupon_code_help'] = 'The coupon code is the unique code which is linked to each individual coupon. You can find this code on your coupon.';
 $string['label:course_id_help'] = 'Il corso che desideri iscrivere e per il quale desideri utilizzare il tuo codice.';
-$string['label:enter_coupon_code'] = 'Inserisci qui il tuo codice';
+$string['label:enter_coupon_code'] = 'Inserisci qui il tuo codice e scegli il corso a quale iscriverti.';
 $string['label:enter_course_id'] = 'Inserisci il corso a cui desideri iscriverti';
 $string['label:alternative_email'] = 'Alternative email';
 $string['label:alternative_email_help'] = 'Send coupons by default to this email address.';
@@ -281,7 +281,7 @@ $string['error:recipients-invalid'] = 'The file could not be validated. Are you 
 $string['error:recipients-empty'] = 'Please enter at least one user.';
 $string['error:recipients-email-invalid'] = 'The email address {$a->email} is invalid. Please fix it in the csv file.';
 $string['error:couponcode-is-present']='Il codice che si sta importando è già presente, usa codici univoci';
-$string['coupon_recipients_desc'] = 'La colonna code deve essere presente nel file CSV e deve contenere i codici che si vogliano caricare.';
+$string['coupon_recipients_desc'] = 'La colonna code deve essere presente nel file CSV e deve contenere i codici che si vogliano caricare. Il massimo numero di codici da caricare è di <b>100 000</b> e il file CSV non deve contenere più di 100 000 righe di codici. Per inserire un numero maggiore di codici, ripetere la procedura di input.';
 $string['report:download-excel'] = 'Download unused coupons';
 
 $string['page:generate_coupon.php:title'] = 'Genera codici';
@@ -576,17 +576,17 @@ $string['extendaccess'] = '{$a} extra';
 $string['view:request:title'] = 'Request coupons';
 $string['view:request:heading'] = 'Request coupons';
 
-$string['privacy:metadata:block_coupon:userid'] = 'The primary database key of the Moodle user';
-$string['privacy:metadata:block_coupon:for_user_email'] = 'Email address of person to which a (personal) coupon is sent, if at all';
-$string['privacy:metadata:block_coupon:for_user_name'] = 'Name of person to which a (personal) coupon is sent, if at all';
-$string['privacy:metadata:block_coupon:for_user_gender'] = 'Gender of person to which a (personal) coupon is sent, if at all';
-$string['privacy:metadata:block_coupon:email_body'] = 'Contents of the email of which a (personal) coupon is sent, if at all';
-$string['privacy:metadata:block_coupon:submission_code'] = 'Coupon subscription code';
-$string['privacy:metadata:block_coupon:claimed'] = 'Whether or not the coupon was claimed';
-$string['privacy:metadata:block_coupon:roleid'] = 'Role ID to be assigned / of the assigned coupon';
-$string['privacy:metadata:block_coupon:timecreated'] = 'Time at which the coupon is created';
-$string['privacy:metadata:block_coupon:timemodified'] = 'Time at which the coupon is modified';
-$string['privacy:metadata:block_coupon:timeexpired'] = 'Expiration date for the coupon';
+$string['privacy:metadata:block_couponext:userid'] = 'The primary database key of the Moodle user';
+$string['privacy:metadata:block_couponext:for_user_email'] = 'Email address of person to which a (personal) coupon is sent, if at all';
+$string['privacy:metadata:block_couponext:for_user_name'] = 'Name of person to which a (personal) coupon is sent, if at all';
+$string['privacy:metadata:block_couponext:for_user_gender'] = 'Gender of person to which a (personal) coupon is sent, if at all';
+$string['privacy:metadata:block_couponext:email_body'] = 'Contents of the email of which a (personal) coupon is sent, if at all';
+$string['privacy:metadata:block_couponext:submission_code'] = 'Coupon subscription code';
+$string['privacy:metadata:block_couponext:claimed'] = 'Whether or not the coupon was claimed';
+$string['privacy:metadata:block_couponext:roleid'] = 'Role ID to be assigned / of the assigned coupon';
+$string['privacy:metadata:block_couponext:timecreated'] = 'Time at which the coupon is created';
+$string['privacy:metadata:block_couponext:timemodified'] = 'Time at which the coupon is modified';
+$string['privacy:metadata:block_couponext:timeexpired'] = 'Expiration date for the coupon';
 
 $string['view:requests:admin:title'] = 'Coupon request administration';
 $string['view:requests:admin:heading'] = 'Coupon request administration';
@@ -652,7 +652,7 @@ $string['label:displayregisterhelp_help'] = 'Enable this option to display a reg
 This will display a short explanation above the link in the block users can click to register a new account with a coupon code.';
 $string['label:displayinputhelp'] = 'Display coupon input help text';
 $string['label:displayinputhelp_help'] = 'Enable this option to display a text to end users above the coupon entry field.';
-$string['str:inputhelp'] = 'Use the input field below to gain access to courses if you received a coupon code';
+$string['str:inputhelp'] = 'Se hai ricevuto un codice, l\'ho poi usare per iscriverti ad uno dei corsi disponibili. L\'iscrizione al corso è valida per un\'anno dal momento dell\'attivazione.';
 $string['str:signuphelp'] = 'Use the link below to create a new account <i>with</i> a coupon code if you received one but have no active account yet';
 $string['label:useloginlayoutonsignup'] = 'Use \'login\' page layout on internal signup?';
 $string['label:useloginlayoutonsignup_help'] = 'If enabled, this will use the default \'login\' page layout on the internal signup page.<br/>

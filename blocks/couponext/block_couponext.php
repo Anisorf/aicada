@@ -130,8 +130,20 @@ class block_couponext extends block_base { //F: the class name must start with b
         if (has_capability('block/couponext:inputcoupons', $this->context)) {
             $urlinputcoupon = new moodle_url($CFG->wwwroot . '/blocks/couponext/view/input_coupon.php', $baseparams);
 
+            // For Coupons show only the courses under the exidl_icdl category
+            $allcat = core_course_category::get_all();
+            $catid=0;
+            foreach($allcat as $cat){
+                if($cat->idnumber=='ecidl_icdl'){
+                    $catid=$cat->id;
+                }
+            }
+            $cat = core_course_category::get($catid);
+            $courses = $cat->get_courses(array('recursive'=>true));
+
             // F: get courses, I do not use $mform since I should extend this class also with \moodleform (multiple extend can't be done).
-            $courses = helper::get_visible_courses();
+            // $courses = helper::get_visible_courses();
+
             // And create data for select.
             $arrcoursesselect = array();
             foreach ($courses as $course) {
@@ -146,7 +158,9 @@ class block_couponext extends block_base { //F: the class name must start with b
                         <tr><td><input type='text' name='coupon_code' placeholder='Inserisci codice' class='form-control' required></td></tr>
                         
                         <tr> <!-- F: the select box for selecting a course to which to enrol! -->
-                             <td>" . $this->create_select_course_box($courses) . "</td> 
+                             <td>" . $this->create_select_course_box($courses) . "
+                                </br>
+                             </td> 
                         </tr>
                         <tr><td><input type='submit' name='submitbutton' value='"
                 . get_string('button:submit_coupon_code', 'block_couponext') . "'></td></tr>
@@ -263,7 +277,6 @@ class block_couponext extends block_base { //F: the class name must start with b
         return true; //F: se il plugin ha un suo settings.php, allora return true
     }
 
-
     /**
      * Generate the select course box
      *
@@ -273,9 +286,13 @@ class block_couponext extends block_base { //F: the class name must start with b
     public function create_select_course_box($courses){
         $out = '<select name="course_id" class="form-control">';
         $out .= '<option value="null">--Seleziona Corso</option>';
+        //TODO: Order courses fullname
         foreach ($courses as $course){
             // $out .= '<option>' . $course->fullname . '</option>';
-            $out .= "<option value=\"" . $course->id . "\" >" . $course->fullname . '</option>';
+            if($course->visible){ // Show only courses that are not hidden
+                $out .= "<option value=\"" . $course->id . "\" >" . $course->fullname . '</option>';
+            }
+
         }
         $out .= '</select>';
         return $out;
