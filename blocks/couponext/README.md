@@ -1,10 +1,13 @@
 
-SEBSOFT COUPON PLUGIN
+BUILD UPON SEBSOFT COUPON PLUGIN BY KOCEVA FROSINA
 
-The Sebsoft Coupon Plugin offers you the possibility to create coupons for various levels
-of course access. Using a coupon code, users will be enrolled into courses that are attached to the coupon.
+The Coupon Ext Plugin offers you the possibility to create coupons for various levels
+of course access. Using a coupon code, users will be enrolled into courses that are attached to the coupon, or chosen by the user.
 
 There are a few different ways of generating coupons:
+- Course Specific level: this means the coupon is valid for any course selected from the end user
+  Once the coupon code is entered by a user, he or she will be enroled in the chosen course and the coupon is claimed.
+   
 - Course level: this means one or more course(s) need to be selected for which the coupon is valid.
   Once the coupon code is entered by a user, he or she will be enroled in every course the coupon
   is attached to.
@@ -23,6 +26,11 @@ There are a few different ways of generating coupons:
   even though it's a logical step.
 
 Furthermore, coupons can be generated on two "access" levels:
+- Course Specific Upload. The base of this, is either a CSV is uploaded, or a CSV is given directly in a
+  textbox containing only the codes to be imported. These coupons are not associated to a user, and can be claimed by 
+  whoever has the code on whatever course he/she choose.
+  These coupons will then be generated using a background task. 
+
 - Personalized. The base of this, is either a CSV is uploaded, or a CSV is given directly in a textbox.
   The needed user information for every coupon to be generated will be the user's name, email address
   and gender.

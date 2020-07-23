@@ -97,8 +97,9 @@ abstract class typebase {
          // The base is: call claim. Should be sufficient for most coupons.
          $this->claim($foruserid, $forcourseid);
 
-         $redirect = (empty($this->coupon->redirect_url)) ? $CFG->wwwroot . "/my" : $this->coupon->redirect_url;
-         redirect($redirect, get_string('success:coupon_used', 'block_couponext'));
+         // $redirect = (empty($this->coupon->redirect_url)) ? $CFG->wwwroot . "/my" : $this->coupon->redirect_url;
+        $redirect = (empty($this->coupon->redirect_url)) ?  $this->coupon->redirect_url : "$CFG->wwwroot/course/view.php?id=$forcourseid";
+        redirect($redirect, get_string('success:coupon_used', 'block_couponext'));
      }
 
     /**
