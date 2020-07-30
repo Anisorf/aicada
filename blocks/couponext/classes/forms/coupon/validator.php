@@ -63,8 +63,8 @@ class validator extends \moodleform {
         $mform->addHelpButton('coupon_code', 'label:coupon_code', 'block_couponext');
         // F: And the course id to which the user want to enrol.
         $mform->addElement('text', 'course_id', get_string('label:course_id', 'block_couponext'));
-        $mform->addRule('course_id', get_string('error:required', 'block_couponext'), 'required', null, 'client');
-        $mform->addRule('course_id', get_string('error:required', 'block_couponext'), 'required', null, 'server');
+        $mform->addRule('course_id', get_string('error:required', 'block_couponext'), 'required', 0, 'client'); // course_id is 0 when no course is selected
+        $mform->addRule('course_id', get_string('error:required', 'block_couponext'), 'required', 0, 'server');
         $mform->setType('course_id', PARAM_INT);
         $mform->addHelpButton('course_id', 'label:course_id', 'block_couponext');
 
@@ -81,28 +81,48 @@ class validator extends \moodleform {
      *         or an empty array if everything is OK (true allowed for backwards compatibility too).
      */
     public function validation($data, $files) {
-        global $USER;
+        global $DB, $USER;
         $errors = parent::validation($data, $files);
 
+        $conditions = array(
+            'submission_code' => $data['coupon_code'],
+            'claimed' => 0,
+        );
+        $coupon = $DB->get_record('block_couponext', $conditions);
         // F: If my custom form with course_id than call get_type_instance by passing course_id, else act as per default
-        if(!empty($data['course_id'])){
+        // if(!empty($data['course_id'])){
+        if(empty($coupon)){
+            $errors['coupon_code'] = get_string('error:invalid_coupon_code', 'block_couponext');
+        }
+        else if(!empty($coupon) && $data['course_id']==0){
+            $errors['coupon_code'] = get_string('error:invalid_course_id', 'block_couponext');
+        }
+        else if($data['course_id']>0){
+            // TODO check if the course_id is correct in respect of the coupon
             $typeproc = \block_couponext\coupon\typebase::get_type_instance_with_course($data['coupon_code'], $data['course_id']);
         }
-        else{
+        /* else{
             // Get type processor.
             $typeproc = \block_couponext\coupon\typebase::get_type_instance($data['coupon_code']);
-        }
+        } */
         // Get type processor.
         // $typeproc = \block_couponext\coupon\typebase::get_type_instance($data['coupon_code']);
 
         // F: COURSE CODE
-        try {
+        /*try {
             // Assert not yet used.
             $typeproc->assert_not_claimed();
             // Assert specialized.
             // TODO F: not working well, check if necessary
             $typeproc->assert_internal_checks($USER->id);
-        } catch (Exception $ex) {
+        }
+        */
+        try {
+            if (!empty($coupon)) {
+                \block_couponext\helper::already_enroled_check($USER->id, $coupon->submission_code);
+            }
+        }
+        catch (Exception $ex) {
             $errors['coupon_code'] = $ex->getMessage();
         }
 

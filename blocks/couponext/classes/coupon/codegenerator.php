@@ -77,6 +77,7 @@ final class codegenerator {
         global $DB;
 
         $vcode = self::generate_code($size, $flags = self::ALL, $exclude);
+        // while these vcode exist in DB block_couponext submission_code field than generate another one.
         while ($DB->get_record('block_couponext', array('submission_code' => $vcode))) {
             $vcode = self::generate_code($size, $flags = self::ALL, $exclude);
         }

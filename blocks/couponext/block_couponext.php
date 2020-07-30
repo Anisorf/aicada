@@ -153,18 +153,121 @@ class block_couponext extends block_base { //F: the class name must start with b
 
             $couponform = "
                 <form action='$urlinputcoupon' method='post' class='form-group'>
+                    <script type='text/javascript'> 
+                        function filterCategorySelect(val){
+                                                      
+                            if(val.substring(0,3).toLowerCase()==='ctz'){ // Citizen
+                                // alert(document.getElementById('course_id').value);
+                                document.getElementById('course_ctz').style.display = 'block';
+                                document.getElementById('course_all').style.display = 'none';
+                                document.getElementById('course_std').style.display = 'none';
+                                document.getElementById('course_wkf').style.display = 'none';
+                                document.getElementById('course_pfs').style.display = 'none';
+                                document.getElementById('course_efj').style.display = 'none';
+                                document.getElementById('course_ecf').style.display = 'none';
+                                document.getElementById('course_dmm').style.display = 'none';
+                                
+                            }
+                            else if (val.substring(0,3).toLowerCase()==='std'){ // Student
+                                document.getElementById('course_std').style.display = 'block';
+                                document.getElementById('course_all').style.display = 'none';
+                                document.getElementById('course_ctz').style.display = 'none';
+                                document.getElementById('course_wkf').style.display = 'none';
+                                document.getElementById('course_pfs').style.display = 'none';
+                                document.getElementById('course_efj').style.display = 'none';
+                                document.getElementById('course_ecf').style.display = 'none';
+                                document.getElementById('course_dmm').style.display = 'none';
+                                
+                            }
+                            else if (val.substring(0,3).toLowerCase()==='wkf'){ // Workforce
+                                document.getElementById('course_wkf').style.display = 'block';
+                                document.getElementById('course_all').style.display = 'none';
+                                document.getElementById('course_ctz').style.display = 'none';
+                                document.getElementById('course_std').style.display = 'none';
+                                document.getElementById('course_pfs').style.display = 'none';
+                                document.getElementById('course_efj').style.display = 'none';
+                                document.getElementById('course_ecf').style.display = 'none';
+                                document.getElementById('course_dmm').style.display = 'none';
+                            }
+                            else if (val.substring(0,3).toLowerCase()==='pfs'){ // Professional
+                                document.getElementById('course_pfs').style.display = 'block';
+                                document.getElementById('course_all').style.display = 'none'; 
+                                document.getElementById('course_ctz').style.display = 'none';
+                                document.getElementById('course_std').style.display = 'none';
+                                document.getElementById('course_wkf').style.display = 'none';
+                                document.getElementById('course_efj').style.display = 'none';
+                                document.getElementById('course_ecf').style.display = 'none';
+                                document.getElementById('course_dmm').style.display = 'none';
+                            }
+                            else if (val.substring(0,3).toLowerCase()==='efj'){ // E4JOB
+                                alert('E4JOB');block
+                                document.getElementById('course_efj').style.display = 'block';
+                                document.getElementById('course_all').style.display = 'none';
+                                document.getElementById('course_ctz').style.display = 'none';
+                                document.getElementById('course_std').style.display = 'none';
+                                document.getElementById('course_wkf').style.display = 'none';
+                                document.getElementById('course_pfs').style.display = 'none';
+                                document.getElementById('course_ecf').style.display = 'none';
+                                document.getElementById('course_dmm').style.display = 'none';
+                            }
+                            else if (val.substring(0,3).toLowerCase()==='ecf'){ // ECF – European Competence Framework
+                                document.getElementById('course_ecf').style.display = 'block';
+                                document.getElementById('course_all').style.display = 'none';  
+                                document.getElementById('course_ctz').style.display = 'none';
+                                document.getElementById('course_std').style.display = 'none';
+                                document.getElementById('course_wkf').style.display = 'none';
+                                document.getElementById('course_pfs').style.display = 'none';
+                                document.getElementById('course_efj').style.display = 'none';
+                                document.getElementById('course_dmm').style.display = 'none';     
+                            }
+                            else if (val.substring(0,3).toLowerCase()==='dmm'){ // Dummy
+                                document.getElementById('course_dmm').style.display = 'block';
+                                document.getElementById('course_all').style.display = 'none';  
+                                document.getElementById('course_ctz').style.display = 'none';
+                                document.getElementById('course_std').style.display = 'none';
+                                document.getElementById('course_wkf').style.display = 'none';
+                                document.getElementById('course_pfs').style.display = 'none';
+                                document.getElementById('course_efj').style.display = 'none';
+                                document.getElementById('course_ecf').style.display = 'none';
+                            }
+                            else if (val === undefined || val === null){ // If no value is inserted as a coupon than show all courses under coupon category
+                                document.getElementById('course_all').style.display = 'block';
+                                document.getElementById('course_ctz').style.display = 'none';
+                                document.getElementById('course_std').style.display = 'none';
+                                document.getElementById('course_wkf').style.display = 'none';
+                                document.getElementById('course_pfs').style.display = 'none';
+                                document.getElementById('course_efj').style.display = 'none';
+                                document.getElementById('course_ecf').style.display = 'none';
+                                document.getElementById('course_dmm').style.display = 'none';
+                            }
+                            else { // No filter criteria
+                                document.getElementById('course_all').style.display = 'block';
+                                document.getElementById('course_ctz').style.display = 'none';
+                                document.getElementById('course_std').style.display = 'none';
+                                document.getElementById('course_wkf').style.display = 'none';
+                                document.getElementById('course_pfs').style.display = 'none';
+                                document.getElementById('course_efj').style.display = 'none';
+                                document.getElementById('course_ecf').style.display = 'none';
+                                document.getElementById('course_dmm').style.display = 'none';
+                            }
+                            
+                        }
+    
+                    </script>
                     <table>
                         <tr><td>" . get_string('label:enter_coupon_code', 'block_couponext') . ":</td></tr>
-                        <tr><td><input type='text' name='coupon_code' placeholder='Inserisci codice' class='form-control' required></td></tr>
+                        <tr><td><input type='text' name='coupon_code' placeholder='Inserisci codice' class='form-control' required onchange='filterCategorySelect(this.value)'></td></tr>
                         
                         <tr> <!-- F: the select box for selecting a course to which to enrol! -->
-                             <td>" . $this->create_select_course_box($courses) . "
+                             <td>" . $this->create_select_course_box() . "
                                 </br>
                              </td> 
                         </tr>
-                        <tr><td><input type='submit' name='submitbutton' value='"
+                        <tr><td>
+                        <input type='submit' name='submitbutton' value='"
                 . get_string('button:submit_coupon_code', 'block_couponext') . "'></td></tr>
                     </table>
+                    
                     <input type='hidden' name='id' value='{$this->instance->id}' />
                     <input type='hidden' name='submitbutton' value='Submit Coupon' />
                     <input type='hidden' name='_qf__block_couponext_forms_coupon_validator' value='1' />
@@ -280,14 +383,73 @@ class block_couponext extends block_base { //F: the class name must start with b
     /**
      * Generate the select course box
      *
-     * @param $courses
-     * @return string
+     * @return string select box
      */
-    public function create_select_course_box($courses){
-        $out = '<select name="course_id" class="form-control">';
-        $out .= '<option value="null">--Seleziona Corso</option>';
+    public function create_select_course_box(){
+
+        // For Coupons show only the courses under the exidl_icdl category
+            $allcat = core_course_category::get_all();
+            // echo print_r($allcat);
+            $courses_all = 0;
+            $courses_ecdl = 0;
+            $courses_ctz = 0;
+            $courses_std = 0;
+            $courses_wkf = 0;
+            $courses_pfs = 0;
+            $courses_efj = 0;
+            $courses_ecf = 0;
+            $courses_dmm = 0;
+
+
+            foreach($allcat as $cat){
+                if($cat->idnumber=='ctz'){
+                    $cat_ctz = core_course_category::get($cat->id);
+                    $courses_ctz = $cat_ctz->get_courses(array('recursive'=>true));
+                }
+                else if($cat->idnumber=='std'){
+                    $cat_std = core_course_category::get($cat->id);
+                    $courses_std = $cat_std->get_courses(array('recursive'=>true));
+                }
+                else if($cat->idnumber=='ecidl_icdl'){
+                    $cat_ecdl = core_course_category::get($cat->id);
+                    $courses_ecdl = $cat_ecdl->get_courses(array('recursive'=>true));
+                }
+                else if($cat->idnumber=='wkf'){
+                    $cat_wkf = core_course_category::get($cat->id);
+                    $courses_wkf = $cat_wkf->get_courses(array('recursive'=>true));
+                }
+                else if($cat->idnumber=='pfs'){
+                    $cat_pfs = core_course_category::get($cat->id);
+                    $courses_pfs = $cat_pfs->get_courses(array('recursive'=>true));
+                }
+                else if($cat->idnumber=='efj'){
+                    $cat_efj = core_course_category::get($cat->id);
+                    $courses_efj = $cat_efj->get_courses(array('recursive'=>true));
+                }
+                else if($cat->idnumber=='ecf'){
+                    $cat_ecf = core_course_category::get($cat->id);
+                    $courses_ecf = $cat_ecf->get_courses(array('recursive'=>true));
+                }
+                else if($cat->idnumber=='dmm'){
+                    $cat_dmm = core_course_category::get($cat->id);
+                    $courses_dmm = $cat_dmm->get_courses(array('recursive'=>true));
+                }
+                else if($cat->idnumber=='coupon_all'){
+                    $cat_all = core_course_category::get($cat->id);
+                    $courses_all = $cat_all->get_courses(array('recursive'=>true));
+                }
+                else {
+                    $cat_all = core_course_category::get($cat->id);
+                    $courses_all = $cat_all->get_courses(array('recursive'=>true));
+                }
+            }
+
+
+
+        $out = '<select id="course_all" name="course_id" class="form-control" required>';
+        $out .= '<option value="0">--Seleziona Corso</option>';
         //TODO: Order courses fullname
-        foreach ($courses as $course){
+        foreach ($courses_all as $course){
             // $out .= '<option>' . $course->fullname . '</option>';
             if($course->visible){ // Show only courses that are not hidden
                 $out .= "<option value=\"" . $course->id . "\" >" . $course->fullname . '</option>';
@@ -295,6 +457,103 @@ class block_couponext extends block_base { //F: the class name must start with b
 
         }
         $out .= '</select>';
+
+        // Select only Courses Citizen
+        $out .= '<select id="course_ctz" name="course_id" class="form-control" style="display:none" required>';
+        $out .= '<option value="0">--Seleziona Corso</option>';
+        foreach ($courses_ctz as $course){
+            // $out .= '<option>' . $course->fullname . '</option>';
+            if($course->visible){ // Show only courses that are not hidden
+                $out .= "<option value=\"" . $course->id . "\" >" . $course->fullname . '</option>';
+            }
+
+        }
+        $out .= '</select>';
+
+        // Select only Courses Student
+        $out .= '<select id="course_std" name="course_id" class="form-control" style="display:none" required>';
+        $out .= '<option value="0">--Seleziona Corso</option>';
+        foreach ($courses_std as $course){
+            // $out .= '<option>' . $course->fullname . '</option>';
+            if($course->visible){ // Show only courses that are not hidden
+                $out .= "<option value=\"" . $course->id . "\" >" . $course->fullname . '</option>';
+            }
+
+        }
+        $out .= '</select>';
+
+        // Select only Courses ECIDL/ICDL
+        $out .= '<select id="course_ecdl" name="course_id" class="form-control" style="display:none" required>';
+        $out .= '<option value="0">--Seleziona Corso</option>';
+        foreach ($courses_ecdl as $course){
+            // $out .= '<option>' . $course->fullname . '</option>';
+            if($course->visible){ // Show only courses that are not hidden
+                $out .= "<option value=\"" . $course->id . "\" >" . $course->fullname . '</option>';
+            }
+
+        }
+        $out .= '</select>';
+
+        // Select only Courses Workforce
+        $out .= '<select id="course_wkf" name="course_id" class="form-control" style="display:none" required>';
+        $out .= '<option value="0">--Seleziona Corso</option>';
+        foreach ($courses_wkf as $course){
+            // $out .= '<option>' . $course->fullname . '</option>';
+            if($course->visible){ // Show only courses that are not hidden
+                $out .= "<option value=\"" . $course->id . "\" >" . $course->fullname . '</option>';
+            }
+
+        }
+        $out .= '</select>';
+
+        // Select only Courses Professional
+        $out .= '<select id="course_pfs" name="course_id" class="form-control" style="display:none" required>';
+        $out .= '<option value="0">--Seleziona Corso</option>';
+        foreach ($courses_pfs as $course){
+            // $out .= '<option>' . $course->fullname . '</option>';
+            if($course->visible){ // Show only courses that are not hidden
+                $out .= "<option value=\"" . $course->id . "\" >" . $course->fullname . '</option>';
+            }
+
+        }
+        $out .= '</select>';
+
+        // Select only Courses E4JOB
+        $out .= '<select id="course_efj" name="course_id" class="form-control" style="display:none" required>';
+        $out .= '<option value="0">--Seleziona Corso</option>';
+        foreach ($courses_efj as $course){
+            // $out .= '<option>' . $course->fullname . '</option>';
+            if($course->visible){ // Show only courses that are not hidden
+                $out .= "<option value=\"" . $course->id . "\" >" . $course->fullname . '</option>';
+            }
+
+        }
+        $out .= '</select>';
+
+        // Select only Courses ECF
+        $out .= '<select id="course_ecf" name="course_id" class="form-control" style="display:none" required>';
+        $out .= '<option value="0">--Seleziona Corso</option>';
+        foreach ($courses_ecf as $course){
+            // $out .= '<option>' . $course->fullname . '</option>';
+            if($course->visible){ // Show only courses that are not hidden
+                $out .= "<option value=\"" . $course->id . "\" >" . $course->fullname . '</option>';
+            }
+
+        }
+        $out .= '</select>';
+
+        // Select only Courses Dummy
+        $out .= '<select id="course_dmm" name="course_id" class="form-control" style="display:none" required>';
+        $out .= '<option value="0">--Seleziona Corso</option>';
+        foreach ($courses_dmm as $course){
+            // $out .= '<option>' . $course->fullname . '</option>';
+            if($course->visible){ // Show only courses that are not hidden
+                $out .= "<option value=\"" . $course->id . "\" >" . $course->fullname . '</option>';
+            }
+
+        }
+        $out .= '</select>';
+
         return $out;
     }
 }

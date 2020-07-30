@@ -37,6 +37,7 @@ require_once("$CFG->libdir/externallib.php");
  *
  * @copyright   Sebsoft.nl
  * @author      R.J. van Dongen <rogier@sebsoft.nl>
+ * @author      Frosina Koceva <frosina.koceva@gmail.com>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_coupon_external extends external_api {
@@ -52,6 +53,15 @@ class block_coupon_external extends external_api {
     }
 
     // TODO F: Here define a new service, and add it to the /db/services.php
+    /**
+     * Get all non-sidewide and visible categories.
+     *
+     * @return array
+     */
+    public static function get_categories() {
+        $rs = \block_couponext\helper::get_visible_categories('id,name,idnumber');
+        return array_values($rs);
+    }
 
     /**
      * Is get_courses() allowed from AJAX?

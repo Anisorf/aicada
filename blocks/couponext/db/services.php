@@ -34,6 +34,7 @@ $services = array(
     'couponservice' => array(           // F: the name of the web service
         'functions' => array(           // F: web service functions of this service
             'block_coupon_get_courses',
+            'block_coupon_get_categories',
             'block_coupon_get_cohorts',
             'block_coupon_get_course_groups',
             'block_coupon_request_coupon_codes_for_course',
@@ -60,6 +61,14 @@ $functions = array(
         'description' => 'Get courses.',                // F: human readable description of the web service function
         'type' => 'read',                               // F: database rights of the web service function (read, write)
         'ajax' => true                                  // F: is the service available to 'internal' ajax calls.
+    ),
+    'block_coupon_get_categories' => array( // I'm not using it
+        'classname' => 'block_coupon_external',
+        'methodname' => 'get_categories',
+        'classpath' => 'blocks/couponext/externallib.php',
+        'description' => 'Get categories.',
+        'type' => 'read',
+        'ajax' => true
     ),
     'block_coupon_get_cohorts' => array(
         'classname' => 'block_coupon_external',

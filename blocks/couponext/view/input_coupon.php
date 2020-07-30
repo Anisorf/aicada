@@ -69,6 +69,7 @@ try {
         redirect(new moodle_url($CFG->wwwroot . '/course/view.php', array('id' => $course->id)));
     }
     else if ($data = $mform->get_data()) { //In this case you process validated data. $mform->get_data() returns data posted in form.
+        //  && $mform->get_data()->course_id > 0
 
         // TODO F: its passing also the course id, make it posible to distinguish for different type of coupons (e.g. the course type does not need courseid like the coursespecific type)
         // Get type processor.
@@ -80,9 +81,10 @@ try {
         // Process the claim.
         // The base is to just claim, but various coupons might have their own processing.
         // F: the original process_claim was : $typeproc->process_claim($USER->id);
-        if(is_null($data->course_id))
+        /* if(is_null($data->course_id))
             $typeproc->process_claim($USER->id);
-        else if(!is_null($data->course_id))
+        else if(!is_null($data->course_id))*/
+        // if($data->course_id != 0)
             $typeproc->process_claim_coursespecific($USER->id, $data->course_id);
     } else {
         // this branch is executed if the form is submitted but the data doesn't validate
@@ -95,7 +97,8 @@ try {
 } catch (block_couponext\exception $e) {
     \core\notification::error($e->getMessage());
 } catch (\Exception $ex) {
-    \core\notification::error(get_string('err:coupon:generic'));
+    // \core\notification::error(get_string('err:coupon:generic'));
+    throw new \block_couponext\exception('err:coupon:generic');
 }
 
 // TODO Redirect to Dashboard /my/index.php, but it could be better to redirect to the course on successful submitting of coupon code + course id

@@ -257,8 +257,11 @@ class generator implements icoupongenerator {
     protected function validate_coursespecific($importedcoupons) {
         global $DB;
         $couponsar = array();
-        for($i=0;$i<count($importedcoupons); $i++){
-            $couponsar[$i] = $importedcoupons[$i]->couponkey;
+        // Warning: count(): Parameter must be an array or an object that implements Countable in /var/www/html/moodle/blocks/couponext/classes/coupon/generator.php on line 260
+        if (is_array($importedcoupons) && count($importedcoupons) ) {
+            for($i=0;$i<count($importedcoupons); $i++){
+                $couponsar[$i] = $importedcoupons[$i]->couponkey;
+            }
         }
         // Load courses.
         $this->generatorcodes = $DB->get_records_list('block_couponext', 'submission_code', $couponsar, 'id ASC', 'id, submission_code');

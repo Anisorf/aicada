@@ -123,6 +123,20 @@ class helper {
     }
 
     /**
+     * Get a list of all visible categories, I'm not using it
+     *
+     * @param string $fields the fields to get
+     * @return array
+     */
+    static public final function get_visible_categories($fields = 'id,name,idnumber') {
+        global $DB;
+        $select = "id != 1 AND visible = 1";
+        $categories = $DB->get_records_select('mdl_course_categories', $select, null, 'fullname ASC', $fields);
+
+        return (!empty($categories)) ? $categories : false;
+    }
+
+    /**
      * Get a list of coupons for a given owner.
      * If the owner is NULL or 0, this gets all coupons.
      *
@@ -992,6 +1006,7 @@ class helper {
         // Generate codesonly checkbox.
         $mform->addElement('checkbox', 'generatecodesonly', get_string('label:generatecodesonly', 'block_couponext'));
         $mform->addHelpButton('generatecodesonly', 'label:generatecodesonly', 'block_couponext');
+        $mform->setDefault('generatecodesonly', 1);
 
         // Generate_pdf checkbox.
         $mform->addElement('checkbox', 'generate_pdf', get_string('label:generate_pdfs', 'block_couponext'));
@@ -1001,7 +1016,7 @@ class helper {
         // Render QR code checkbox.
         $mform->addElement('checkbox', 'renderqrcode', get_string('label:renderqrcode', 'block_couponext'));
         $mform->addHelpButton('renderqrcode', 'label:renderqrcode', 'block_couponext');
-        $mform->setDefault('renderqrcode', 1);
+        // $mform->setDefault('renderqrcode', 1);
         $mform->disabledIf('renderqrcode', 'generatecodesonly', 'checked');
     }
 
@@ -1414,6 +1429,59 @@ class helper {
         // Reset old level!
         $CFG->debug = $debuglevel;
         return $result;
+    }
+
+
+    /**
+     * Checks if the cron has send all the coupons generated at specific time by specific owner.
+     *
+     * @param int $userid
+     * @param int $couponcode
+     * @return bool
+     */
+    public static final function already_enroled_check($userid, $couponcode) {
+        global $CFG, $DB;
+        require_once($CFG->dirroot . '/cohort/lib.php');
+        // Get record.
+        $conditions = array(
+            'submission_code' => $couponcode,
+            'claimed' => 0,
+        );
+        $coupon = $DB->get_record('block_couponext', $conditions);
+        if (empty($coupon)) {
+            return true;
+        }
+        switch ($coupon->typ) {
+            case coupon\generatoroptions::COURSE:
+            case coupon\generatoroptions::COURSESPECIFIC:
+                break;
+            case coupon\generatoroptions::ENROLEXTENSION:
+                $couponcourses = $DB->get_records('block_couponext_courses', array('couponid' => $coupon->id));
+                $cansignup = false;
+                foreach ($couponcourses as $couponcourse) {
+                    $ee = enrol_get_enrolment_end($couponcourse->courseid, $userid);
+                    if ($ee === false) {
+                        $cansignup = true;
+                    }
+                }
+                if (!$cansignup) {
+                    throw new exception('error:already-enrolled-in-courses');
+                }
+                break;
+            case coupon\generatoroptions::COHORT:
+                $couponcohorts = $DB->get_records('block_couponext_cohorts', array('couponid' => $coupon->id));
+                $cansignup = false;
+                foreach ($couponcohorts as $couponcohort) {
+                    $ee = cohort_is_member($couponcohort->cohortid, $userid);
+                    if ($ee === false) {
+                        $cansignup = true;
+                    }
+                }
+                if (!$cansignup) {
+                    throw new exception('error:already-enrolled-in-cohorts');
+                }
+                break;
+        }
     }
 
 }

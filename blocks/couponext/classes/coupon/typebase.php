@@ -199,7 +199,11 @@ abstract class typebase {
         // Base validation.
         if (empty($coupon)) {
             throw new exception('error:invalid_coupon_code');
-        } else if (!is_null($coupon->userid) && $coupon->typ != generatoroptions::ENROLEXTENSION) {
+        }
+        else if ($course_id == 0) { // Check and throw exception when if no course was selected
+            throw new exception('error:invalid_course_id');
+        }
+        else if (!is_null($coupon->userid) && $coupon->typ != generatoroptions::ENROLEXTENSION) {
             throw new exception('error:coupon_already_used');
         }
 
