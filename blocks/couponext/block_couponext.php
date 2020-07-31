@@ -220,9 +220,9 @@ class block_couponext extends block_base { //F: the class name must start with b
                                 document.getElementById('course_efj').style.display = 'none';
                                 document.getElementById('course_dmm').style.display = 'none';     
                             }
-                            else if (val.substring(0,3).toLowerCase()==='dmm'){ // Dummy
-                                document.getElementById('course_dmm').style.display = 'block';
-                                document.getElementById('course_all').style.display = 'none';  
+                            else if (val.substring(0,3).toLowerCase()==='dmm'){ // Dummy show all courses under coupons untill all the other categories are ready
+                                document.getElementById('course_dmm').style.display = 'none';
+                                document.getElementById('course_all').style.display = 'block';  
                                 document.getElementById('course_ctz').style.display = 'none';
                                 document.getElementById('course_std').style.display = 'none';
                                 document.getElementById('course_wkf').style.display = 'none';
